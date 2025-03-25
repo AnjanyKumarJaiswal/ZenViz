@@ -1,0 +1,89 @@
+"use client"
+
+import type React from "react"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+
+export function LoginForm() {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setIsLoading(true)
+    setError("")
+
+    const formData = new FormData(event.currentTarget)
+//     const result = await login(formData)
+
+//     setIsLoading(false)
+
+//     if (result.success) {
+//       router.push("/dashboard")
+//       router.refresh()
+//     } else {
+//       setError(result.error || "Something went wrong. Please try again.")
+//     }
+//   }
+  }
+  return (
+    <>
+    <div className="mx-auto space-y-4 h-[500px] w-[450px] backdrop-blur-md bg-white/30 rounded-xl font-poppins">
+      <div className="space-y-2 text-center p-10">
+        <h1 className="text-3xl font-bold text-gray-100 dark:text-slate-300">Login</h1>
+        <p className="text-gray-500 dark:text-gray-700 ml-[15px] mr-[15px]">Enter your credentials to access your account</p>
+      </div>
+      <form onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
+        {error && <div className="p-3 text-sm text-white bg-red-500 rounded">{error}</div>}
+        <div className="space-y-2">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="YourEmail@example.com"
+            required
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
+          />
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Password
+            </label>
+            <Link href="/auth/forgot-password" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+              Forgot password?
+            </Link>
+          </div>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isLoading}
+        >
+          {isLoading ? "Logging in..." : "Login"}
+        </button>
+      </form>
+      <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+        Don&apos;t have an account?{" "}
+        <Link href="/auth/signup" className="text-blue-600 dark:text-blue-400 hover:underline">
+          Sign up
+        </Link>
+      </div>
+    </div>
+    </>
+  )
+
+}
