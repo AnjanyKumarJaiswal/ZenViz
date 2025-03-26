@@ -15,7 +15,7 @@ const SignUpSchema = z.object({
     reTypepassword: z.string().min(4,{message:"Re-Entered Password must match the original Password"})
 })  
 
-export async function login(prevState: any, formData: FormData){
+export async function login(formData: FormData){
     const email = formData.get('email')
     const password = formData.get('password')
     try{

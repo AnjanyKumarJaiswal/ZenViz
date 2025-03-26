@@ -34,8 +34,12 @@ export function Navbar() {
           <NavigationMenuLink
             className="px-4 py-2 rounded-xl transition-all hover:bg-zinc-600 cursor-pointer text-lg"
             onClick={() => {
-              router.push(`/${item.toLowerCase()}`);
+              if(item == "Home"){
+                router.push("/")
+              } else{
+                router.push(`/${item.toLowerCase()}`);
               if (isMobile) setIsOpen(false);
+              }
             }}
           >
             {item}
@@ -46,7 +50,7 @@ export function Navbar() {
   );
 
   return (
-    <div className="relative w-full h-[110px] flex items-center justify-center px-4 md:px-8 font-poppins">
+    <div className="relative w-full h-[110px] flex items-center justify-center px-4 md:px-8 font-poppins shadow-xl shadow-zinc-900">
       <div className="flex items-center w-full md:w-auto">
         <button 
           className="md:hidden text-white p-2 z-50" 
