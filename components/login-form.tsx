@@ -2,13 +2,15 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState , useActionState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { login } from "@/app/lib/action"
 
 export function LoginForm() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [state, loginAction] = useActionState(login, undefined)
   const [error, setError] = useState("")
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -17,17 +19,14 @@ export function LoginForm() {
     setError("")
 
     const formData = new FormData(event.currentTarget)
-//     const result = await login(formData)
-
-//     setIsLoading(false)
-
-//     if (result.success) {
-//       router.push("/dashboard")
-//       router.refresh()
-//     } else {
-//       setError(result.error || "Something went wrong. Please try again.")
-//     }
-//   }
+    const result = await login(state,formData)
+    console.log("Successfully logged IN")
+    if(result){
+      console.log("Redirecting.....")
+      router.push("/dashboard")
+    } else{
+      console.log("Failed to Login Please try again")
+    }
   }
   return (
     <>
@@ -36,7 +35,7 @@ export function LoginForm() {
         <h1 className="text-3xl font-bold text-gray-100 dark:text-slate-300">Login</h1>
         <p className="text-gray-500 dark:text-gray-700 ml-[15px] mr-[15px]">Enter your credentials to access your account</p>
       </div>
-      <form onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
+      <form action={loginAction} onClick={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
         {error && <div className="p-3 text-sm text-white bg-red-500 rounded">{error}</div>}
         <div className="space-y-2">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -85,5 +84,4 @@ export function LoginForm() {
     </div>
     </>
   )
-
 }
