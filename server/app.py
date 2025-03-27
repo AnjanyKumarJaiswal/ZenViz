@@ -13,7 +13,7 @@ initialised_DB(app=app)
 def testing():
     return "<a>hello this is working really fine<a/>"
 
-@app.route('/api/auth/login', methods=['POST'])
+@app.route('/api/auth/login', methods=['POST','GET'])
 def login():
     return user_login()
 
