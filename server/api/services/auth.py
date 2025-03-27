@@ -31,6 +31,6 @@ def user_login():
         return jsonify({"message": "User Logged in SuccessFully"}), 200
 
     except Exception as e:
-        print("an error occured!!!!")
+        print("an error occurred!!!!")
         db.session.rollback()
         return jsonify({"error": str(e)}), 500

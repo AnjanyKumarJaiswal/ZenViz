@@ -24,7 +24,6 @@ class UserProfileItem(db.Model):
     fullName: Mapped[str] = mapped_column(String(30), nullable=False)
     email: Mapped[str] = mapped_column(String(30),  nullable=False , unique=True)
     password: Mapped[str] = mapped_column(String(12), nullable=False , unique=True)
-    reTypePassword: Mapped[str] = mapped_column(String(12), nullable=False)
     
     user = relationship("UserItem", back_populates="profile")
     
