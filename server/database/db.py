@@ -16,14 +16,14 @@ def initialised_DB(app):
     # app.config['SQLALCHEMY_DATABASE_URI'] = mysql_config
     # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  
 
-    db.init_app(app)
-    Migrate(app, db)
+    # db.init_app(app)
+    # Migrate(app, db)
     
-    # try:
-    #     # print("Initialising SQL Database....")
-    #     db.init_app(app)
-    #     # print("Now Initialising Migration of the Database...")
-    #     Migrate(app, db)
-    #     # print("Migrattion Done....")
-    # except:
-    #     print("An Error Occured While Initialising Database")
+    try:
+        print("Initialising SQL Database....")
+        db.init_app(app)
+        print("Now Initialising Migration of the Database...")
+        Migrate(app, db)
+        print("Migrattion Done....")
+    except:
+        print("An Error Occured While Initialising Database")
