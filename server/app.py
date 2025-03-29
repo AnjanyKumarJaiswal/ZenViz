@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from database.db import initialised_DB
-from api.services.auth import user_login
+from api.services.auth import login , signup
 
 app = Flask(__name__)
 
@@ -14,8 +14,12 @@ def testing():
     return "<a>hello this is working really fine<a/>"
 
 @app.route('/api/auth/login', methods=['POST'])
-def login():
-    return user_login()
+def user_login():
+    return login()
+
+@app.route("/api/auth/signup",methods=["POST"])
+def user_signup():
+    return signup()
 
 if __name__ == "__main__":
     app.run(debug=True)

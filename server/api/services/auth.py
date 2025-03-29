@@ -1,8 +1,8 @@
-from api.models.model_schema import UserItem
+from api.models.model_schema import UserItem , UserProfileItem
 from flask import request , jsonify
 from database.db import db
 
-def user_login():
+def login():
     try:
         data = request.get_json()
         print("*** Server Side Data Received ***", data)
@@ -12,9 +12,6 @@ def user_login():
         
         email = data.get('email')
         password = data.get('password')
-        
-        print("This is the email", email)
-        print("This is the Password", password)
         
         if not all([email, password]):
             return jsonify({"error": "Missing required fields"}), 400
@@ -34,3 +31,44 @@ def user_login():
         print("an error occurred!!!!")
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+    
+def signup():
+    # try:
+    #     data = request.get_json()
+    #     print("*** Server Side Data Received ***", data)
+        
+    #     fullName = data.get("name")
+    #     email = data.get("email")
+    #     password = data.get("password")
+        
+    #     signedUp_user = UserProfileItem(
+    #         fullName = fullName,
+    #         email = email,
+    #         password = password
+    #     )
+        
+    #     db.session.add(signedUp_user)
+    #     db.session.commit()
+    #     return jsonify({"message": "User Logged in SuccessFully"}), 200
+        
+        
+    # except Exception as e:
+    #     print("an error occurred!!!!")
+    #     db.session.rollback()
+    #     return jsonify({"error": str(e)}), 500
+    data = request.get_json()
+    print("*** Server Side Data Received ***", data)
+        
+    fullName = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
+        
+    signedUp_user = UserProfileItem(
+            fullName = fullName,
+            email = email,
+            password = password
+        )
+        
+    db.session.add(signedUp_user)
+    db.session.commit()
+    return jsonify({"message": "User Logged in SuccessFully"}), 200
