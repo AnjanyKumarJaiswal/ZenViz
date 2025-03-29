@@ -20,7 +20,7 @@ class UserProfileItem(db.Model):
     __tablename__ = "userProfile"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, unique=True)
     loginid: Mapped[int] = mapped_column(Integer, sa.ForeignKey("user.id"))
-    username: Mapped[str] = mapped_column(String(12), nullable=False , unique=True)
+    username: Mapped[str] = mapped_column(String(12), unique=True)
     fullName: Mapped[str] = mapped_column(String(30), nullable=False)
     email: Mapped[str] = mapped_column(String(30),  nullable=False , unique=True)
     password: Mapped[str] = mapped_column(String(12), nullable=False , unique=True)

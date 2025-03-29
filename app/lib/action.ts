@@ -40,8 +40,25 @@ export async function login(formData: FormData){
 export async function logout(){
 
 }
-export async function signup(formData: FormData) {
+export async function signup(formData: FormData): Promise<any> {
+    const data = {
+        fullName:formData.get("name"),
+        email: formData.get("email"),
+        password: formData.get("password")
+    }
+    // const res = SignUpSchema.safeParse(data)
 
+    try{
+        const response = await fetch("http://localhost:5000/api/auth/signup",{
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        })
+    } catch(err){
+        console.log("Invalid Login!! Please Re-Check your Email and Password")
+    }
 }
 export async function signout(){
 
