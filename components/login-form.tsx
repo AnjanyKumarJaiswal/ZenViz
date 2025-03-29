@@ -11,25 +11,26 @@ export function LoginForm() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [state, loginAction] = useActionState(login, undefined)
-  const [error, setError] = useState("")
+  const [status, setStatus] = useState("")
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsLoading(true)
-    setError("")
+    setStatus("")
 
     const formData = new FormData(event.currentTarget)
     try{
       const result = await login(formData)
-      console.log("Please wait we are logging you in......")
+      console.log("login response", result)
       if(result){
         console.log("Redirecting.....")
         router.push("/dashboard")
+        setStatus("Login Done")
       } else{
         console.log("Failed to Login Please try again")
       }
     } catch(err){
-      console.log("Couldn't Log you in Please re-check with backend service")
+      setStatus("Login Failed")
     }
   }
   return (
@@ -40,7 +41,11 @@ export function LoginForm() {
         <p className="text-gray-900 dark:text-gray-700 ml-[15px] mr-[15px]">Enter your credentials to access your account</p>
       </div>
       <form action={loginAction} onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
-        {error && <div className="p-3 text-sm text-white bg-red-500 rounded">{error}</div>}
+        {
+          status === "Login Failed" ? 
+          (<div className="p-3 text-sm text-white bg-red-500 rounded">{status}</div>) : 
+          (status === "Login Done" ? (<div className="p-3 text-sm text-white bg-green-500 rounded">{status}</div>) : (<div></div>))
+        }
         <div className="space-y-2">
           <label htmlFor="email" className="block text-sm font-medium text-gray-900 dark:text-gray-300">
             Email
