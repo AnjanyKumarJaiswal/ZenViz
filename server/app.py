@@ -13,13 +13,13 @@ initialised_DB(app=app)
 def testing():
     return "<a>hello this is working really fine<a/>"
 
-@app.route('/api/auth/login', methods=['POST'])
-def user_login():
-    return login()
-
 @app.route("/api/auth/signup",methods=["POST"])
 def user_signup():
     return signup()
+
+@app.route('/api/auth/login', methods=['POST'])
+def user_login():
+    return login()
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -12,7 +12,7 @@ const SignUpSchema = z.object({
         {message:"Invalid Email Address"}
     ).trim(),
     password: z.string().min(4,{message:"Password must be at least 4 characters"}).trim(),
-    reTypepassword: z.string().min(4,{message:"Re-Entered Password must match the original Password"})
+    reTypepassword: z.string().min(4,{message:"Re-Entered Password must match the original Password"}).optional()
 })  
 
 export async function login(formData: FormData){
@@ -40,13 +40,13 @@ export async function login(formData: FormData){
 export async function logout(){
 
 }
-export async function signup(formData: FormData): Promise<any> {
+export async function signup(formData: FormData) {
     const data = {
         fullName:formData.get("name"),
         email: formData.get("email"),
         password: formData.get("password")
     }
-    // const res = SignUpSchema.safeParse(data)
+    const res = SignUpSchema.safeParse(data)
 
     try{
         const response = await fetch("http://localhost:5000/api/auth/signup",{
@@ -54,8 +54,14 @@ export async function signup(formData: FormData): Promise<any> {
             headers: {
                 "Content-Type":"application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(res)
         })
+        if(response.ok){
+            const data = await response.json()
+            return data
+        } else{
+            throw new Error("Failed to Log-in")
+        }
     } catch(err){
         console.log("Invalid Login!! Please Re-Check your Email and Password")
     }
