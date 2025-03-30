@@ -5,12 +5,11 @@ import type React from "react"
 import { useState , useActionState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { login } from "@/app/lib/action"
+import { login  , checkSession} from "@/app/lib/action"
 
 export function LoginForm() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const [state, loginAction] = useActionState(login, undefined)
   const [status, setStatus] = useState("")
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -21,16 +20,23 @@ export function LoginForm() {
     const formData = new FormData(event.currentTarget)
     try{
       const result = await login(formData)
-      console.log("login response", result)
-      if(result){
-        console.log("Redirecting.....")
-        router.push("/dashboard")
-        setStatus("Login Done")
-      } else{
-        console.log("Failed to Login Please try again")
+      if (result && result.success) {
+        
+        const sessionCheck = await checkSession()
+        
+        if (sessionCheck && !sessionCheck.error) {
+          console.log("Session verified, redirecting...")
+          router.push("/dashboard")
+        } else {
+          return ({"message":"Session could not be established"})
+        }
+      } else {
+        setStatus(result?.error || "Login failed")
       }
-    } catch(err){
-      setStatus("Login Failed")
+    } catch(err) {
+      return ({"message":"An unexpected error occurred"})
+    } finally {
+      setIsLoading(false)
     }
   }
   return (
@@ -40,7 +46,7 @@ export function LoginForm() {
         <h1 className="text-3xl font-bold text-gray-700 dark:text-slate-900">Login</h1>
         <p className="text-gray-900 dark:text-gray-700 ml-[15px] mr-[15px]">Enter your credentials to access your account</p>
       </div>
-      <form action={loginAction} onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
+      <form  onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
         {
           status === "Login Failed" ? 
           (<div className="p-3 text-sm text-white bg-red-500 rounded">{status}</div>) : 

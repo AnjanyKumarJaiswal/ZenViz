@@ -1,16 +1,17 @@
-from database.db import db
+from config.appconfig import db
 from sqlalchemy.orm import Mapped , mapped_column , relationship
 import sqlalchemy as sa 
 from sqlalchemy import String , Integer , DateTime
 from datetime import datetime
+from uuid import uuid4
 
 class UserProfileItem(db.Model):
     __tablename__ = "userProfile"
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, unique=True)
+    id: Mapped[str] = mapped_column(sa.String(32), primary_key=True, unique=True , default= lambda: uuid4().hex)
     username: Mapped[str] = mapped_column(String(12), nullable=True ,unique=True)
     fullName: Mapped[str] = mapped_column(String(30), nullable=False)
     email: Mapped[str] = mapped_column(String(30),  nullable=False , unique=True)
-    password: Mapped[str] = mapped_column(String(12), nullable=False , unique=True)
+    password: Mapped[str] = mapped_column(String(12), nullable=False , unique=False)
     
     user = relationship("UserItem", back_populates="profile", uselist=False)
     
@@ -20,10 +21,10 @@ class UserProfileItem(db.Model):
 class UserItem(db.Model):
     __tablename__="user"
     
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, unique=True)
-    signupid: Mapped[int] = mapped_column(Integer, sa.ForeignKey("userProfile.id"))
+    id: Mapped[str] = mapped_column(sa.String(32), primary_key=True, unique=True , default=lambda: uuid4().hex)
+    signupid: Mapped[str] = mapped_column(sa.String(32), sa.ForeignKey("userProfile.id"))
     email: Mapped[str] = mapped_column(String(30),  nullable=False , unique=True)
-    password: Mapped[str] = mapped_column(String(12), nullable=False , unique=True)
+    password: Mapped[str] = mapped_column(String(12), nullable=False , unique=False)
     
     profile = relationship("UserProfileItem", back_populates="user")
     
