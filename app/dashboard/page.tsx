@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { checkSession } from "@/app/lib/action";
+// import { useEffect, useState } from "react";
+// import { checkSession } from "@/app/lib/action";
 
 export default function DashboardPage() {
 
