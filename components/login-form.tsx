@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState , useActionState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { login  , checkSession} from "@/app/lib/action"
@@ -33,8 +33,8 @@ export function LoginForm() {
       } else {
         setStatus(result?.error || "Login failed")
       }
-    } catch(err) {
-      return ({"message":"An unexpected error occurred"})
+    } catch{
+      return ({"mesage":"An unexpected error occurred"})
     } finally {
       setIsLoading(false)
     }
