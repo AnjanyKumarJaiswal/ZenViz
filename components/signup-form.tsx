@@ -34,7 +34,7 @@
     }
 
     return (
-      <div className="mx-auto space-y-4 h-[550px] w-[450px] backdrop-blur-md bg-white/30 rounded-xl font-poppins">
+      <div className="mx-auto space-y-4 h-[550px] w-[450px] backdrop-blur-md bg-white/30 rounded-xl font-satoshi">
         <div className="space-y-2 text-center p-4">
           <h1 className="text-3xl font-bold text-gray-700 dark:text-slate-300">Sign Up</h1>
           <p className="text-gray-900 dark:text-gray-400 ml-[15px] mr-[15px]">Create an account to get started</p>
