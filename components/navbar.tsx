@@ -126,32 +126,32 @@ export function MainNavbar(){
       <div className="flex flex-col w-[280px] h-[650px] text-slate-100 rounded-3xl backdrop-blur-xs bg-slate-950/70 items-center border-2 border-slate-800">
         <a className="p-8 font-bold text-3xl">Task Tracker</a>
         <ul className="flex flex-col text-lg gap-8">
-          <div className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+          <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
             <Box className="ml-[10px]"></Box>
-            <li>Dashboard</li>
-          </div>
-          <div className="flex flex-row gap-4 items-center  h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+            <span>Dashboard</span>
+          </li>
+          <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
             <ChartNoAxesColumn className="ml-[10px]"></ChartNoAxesColumn>
-            <li>Analytics</li>
-          </div>
-          <div className="flex flex-row gap-4 items-center  h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+            <span>Analytics</span>
+          </li>
+          <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
             <Bug className="ml-[10px]"></Bug>
-            <li>Reports</li>
-          </div>
-          <div className="flex flex-row gap-4 items-center  h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+            <span>Reports</span>
+          </li>
+          <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
             <Settings className="ml-[10px]"></Settings>
-            <li>Settings</li>
-          </div>
+            <span>Settings</span>
+          </li>
         </ul>
         <ul className="flex flex-col mt-[70px] gap-2 text-md">
-          <div className="flex flex-row gap-2 items-center h-[50px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+          <li className="flex flex-row gap-2 items-center h-[50px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
             <CircleUserRound className="ml-[10px]"/>
-            <li>Profile</li>
-          </div>
-          <div className="flex flex-row gap-2  items-center h-[50px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+            <span>Profile</span>
+          </li>
+          <li className="flex flex-row gap-2 items-center h-[50px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
             <LogOut className="ml-[10px]"/>
-            <li>Log Out</li>
-          </div>
+            <span>Log Out</span>
+          </li>
         </ul>
       </div>
     </div>
