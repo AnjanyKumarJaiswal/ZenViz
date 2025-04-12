@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuLink } from "@/components/ui/navigation-menu";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter} from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Box , ChartNoAxesColumn , Bug , Settings , CircleUserRound , LogOut} from "lucide-react";
 
 export function Navbar() {
   const router = useRouter();
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 

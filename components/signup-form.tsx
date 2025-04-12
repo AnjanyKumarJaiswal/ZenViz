@@ -27,8 +27,9 @@
         } else{
           console.log("Failed to Login Please try again")
         }
-      } catch(err){
+      } catch(error){
         setStatus("Sign Up Failed")
+        return ({"mesage":"An unexpected error occurred","error":error})
       }
     }
 

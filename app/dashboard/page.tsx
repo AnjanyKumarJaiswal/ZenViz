@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect, useState } from "react";
 import { checkSession } from "@/app/lib/action";
 import { MainNavbar } from "@/components/navbar";

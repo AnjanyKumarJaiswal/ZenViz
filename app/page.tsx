@@ -1,11 +1,9 @@
 'use client'
 
 import {Navbar} from '../components/navbar';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 
 export default function Home() {
-
-  const [userAuthenticated, setUserAuthenticated] = useState("")
 
   return (
     <>
