@@ -41,7 +41,7 @@ export function LoginForm() {
   }
   return (
     <>
-    <div className="mx-auto space-y-4 h-[500px] w-[450px] backdrop-blur-md bg-white/30 rounded-xl font-poppins">
+    <div className="mx-auto space-y-4 h-[500px] w-[450px] backdrop-blur-xs bg-white/30 rounded-xl font-satoshi">
       <div className="space-y-2 text-center p-10">
         <h1 className="text-3xl font-bold text-gray-700 dark:text-slate-900">Login</h1>
         <p className="text-gray-900 dark:text-gray-700 ml-[15px] mr-[15px]">Enter your credentials to access your account</p>
