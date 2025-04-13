@@ -37,7 +37,7 @@ export function Navbar() {
               if(item == "Home"){
                 router.push("/")
               } else{
-                router.push(`/${item.toLowerCase()}`);
+                router.push(`/#${item.toLowerCase()}`);
               if (isMobile) setIsOpen(false);
               }
             }}
