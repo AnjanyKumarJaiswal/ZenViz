@@ -2,7 +2,7 @@ from flask import Flask, redirect , session , jsonify
 from flask_cors import CORS
 from flask_session import Session
 from config.appconfig import DB_config , redis_config
-from api.services.auth import login , signup , get_current_user
+from api.services.auth import login , signup , get_current_user ,logging_out_from_session
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
@@ -36,7 +36,11 @@ def user_login():
     response = login()
     return response
 
-@app.route('/api/auth/current_user', methods=['GET'])
+@app.route('/api/auth/logout', methods=['POST'])
+def user_logout():
+    return logging_out_from_session()
+
+@app.route('/api/auth/callback/usersession', methods=['GET'])
 def current_user():
     return get_current_user()
     

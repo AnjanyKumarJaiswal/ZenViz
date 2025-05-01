@@ -2,10 +2,14 @@
 
 import {z} from "zod"
 import axios from "axios";
+import {useRouter} from "next/navigation"
 
 const SignUpSchema = z.object({
     fullName: z.string({
         required_error:"Full Name is Required"
+    }),
+    username : z.string({
+        required_error: "Username is Required"
     }),
     email: z.string({
         required_error:"Email is Required"
@@ -16,7 +20,7 @@ const SignUpSchema = z.object({
     reTypepassword: z.string().min(4,{message:"Re-Entered Password must match the original Password"}).optional()
 })  
 
-const httpClient = await axios.create({
+export const httpClient = await axios.create({
     baseURL: "http://localhost:5000",
     withCredentials: true,
     headers: {
@@ -48,8 +52,10 @@ export async function login(formData: FormData) {
     }
 }
 
+
 export async function signup(formData: FormData) {
     const data = {
+        username: formData.get("username"),
         fullName:formData.get("name"),
         email: formData.get("email"),
         password: formData.get("password")
@@ -62,17 +68,22 @@ export async function signup(formData: FormData) {
     }
 
     try{
-        const response = await fetch("http://localhost:5000/api/auth/signup",{
-            method: "POST",
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify(data),
-            credentials:"include",
-        })
-        if(response.ok){
-            const data = await response.json()
-            return { success: true, data }
+        // const response = await fetch("http://localhost:5000/api/auth/signup",{
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type":"application/json"
+        //     },
+        //     body: JSON.stringify(data),
+        //     credentials:"include",
+        // })
+
+        const response = await httpClient.post("/api/auth/signup",data)
+
+        console.log(response.data)
+
+        if(response.status === 200){
+            // const data = await response.data
+            return { success: true, "message":"New Sign Up and Authorized" , data: response.data };
         } else{
             // Return the error status for proper handling
             return { success: false, error: "Login failed" }
@@ -83,9 +94,20 @@ export async function signup(formData: FormData) {
     }
 }
 
+export async function logout() {
+    try {
+      const response = await httpClient.post("/api/auth/logout");
+      return response.status;
+    } catch (error) {
+      console.log("Failed to Log-Out");
+      return null;
+    }
+  }
+  
+
 export async function checkSession() {
     try {
-        const response = await httpClient.get("/api/auth/current_user", {
+        const response = await httpClient.get("/api/auth/callback/usersession", {
             withCredentials: true
         });
 

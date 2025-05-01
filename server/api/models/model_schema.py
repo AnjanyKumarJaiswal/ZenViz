@@ -23,6 +23,7 @@ class UserItem(db.Model):
     
     id: Mapped[str] = mapped_column(sa.String(32), primary_key=True, unique=True , default=lambda: uuid4().hex)
     signupid: Mapped[str] = mapped_column(sa.String(32), sa.ForeignKey("userProfile.id"))
+    username: Mapped[str] = mapped_column(String(12), nullable=True ,unique=True)
     email: Mapped[str] = mapped_column(String(30),  nullable=False , unique=True)
     password: Mapped[str] = mapped_column(String(12), nullable=False , unique=False)
     
