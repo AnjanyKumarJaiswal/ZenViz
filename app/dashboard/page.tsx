@@ -1,11 +1,23 @@
-'use client'
+"use client"
+
 import { useEffect, useState } from "react";
-import { checkSession } from "@/app/lib/action";
+import { useRouter } from "next/navigation";
+import {httpClient} from "../lib/action"
 import { MainNavbar } from "@/components/navbar";
 import { Music } from "lucide-react";
 
+export interface User {
+  id: string,
+  username: string,
+  fullName: string,
+  email:string
+}
+
 export default function DashboardPage() {
 
+  const [user, setUser] = useState<User | null >(null);
+  const router = useRouter();
+  
   const currentDate = new Date()
 
   const monthTimeline:{[key:number] : string } = {
@@ -23,12 +35,27 @@ export default function DashboardPage() {
     12 : "December"
   }
 
+  useEffect(() =>{
+    (async() =>{
+      try{
+        const resp = await httpClient.get("//localhost:5000/api/auth/callback/usersession")
+        setUser(resp.data.data)
+        console.log(resp.data)
+      } catch (error){
+        console.log("Not Authenticated")
+        router.push("/auth/login")
+      }
+    })()
+
+  }, []);
+
+
   return (
     <section className="grid grid-cols-[300px_1fr] bg-[url('/images/moon_img.jpg')] bg-center bg-no-repeat bg-cover h-screen">
       <MainNavbar/>
       <div className="text-4xl font-satoshi text-slate-200 p-8">
         
-        <p>Welcome Back, David</p>
+        {user != null ? (<p>Welcome Back, {user.username}</p> ) :  ( <p>Loading.....</p> )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 px-4">
 

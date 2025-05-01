@@ -5,6 +5,7 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuL
 import { useRouter} from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Box , ChartNoAxesColumn , Bug , Settings , CircleUserRound , LogOut} from "lucide-react";
+import { logout } from "@/app/lib/action";
 
 export function Navbar() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export function Navbar() {
     return () => window.removeEventListener('resize', checkDeviceType);
   }, []);
 
-  const handleClick = (formType: "login" | "signup") => {
+  const handleClick = (formType: "login" | "signup" | "logout") => {
     router.push(`/auth/${formType}`);
   };
 
@@ -50,7 +51,7 @@ export function Navbar() {
   );
 
   return (
-    <div className="relative w-full h-[110px] flex items-center justify-center px-4 md:px-8 font-satoshi shadow-xl shadow-zinc-900">
+    <div className="relative w-full h-[110px] flex items-center justify-center px-4 md:px-8 font-satoshi shadow-xl ">
       <div className="flex items-center w-full md:w-auto">
         <button 
           className="md:hidden text-white p-2 z-50" 
@@ -109,7 +110,7 @@ export function Navbar() {
       </div>
 
       {isMobile && isOpen && (
-        <div className="fixed inset-0 bg-zinc-900 z-40 flex flex-col items-center justify-center">
+        <div className="fixed inset-0 bg-zinc-800 z-40 flex flex-col items-center justify-center">
           <NavigationMenu>
             <NavLinks />
           </NavigationMenu>
@@ -120,6 +121,16 @@ export function Navbar() {
 }
 
 export function MainNavbar(){
+
+  const router = useRouter()
+
+  const handleClick = async () => {
+    const status = await logout();
+    if (status === 200) {
+      router.push("/");
+    }
+  };
+
   return (
     <>
     <div className="flex font-satoshi justify-center items-center w-[300px] h-screen">
@@ -150,7 +161,7 @@ export function MainNavbar(){
           </li>
           <li className="flex flex-row gap-2 items-center h-[50px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
             <LogOut className="ml-[10px]"/>
-            <span>Log Out</span>
+            <button className="hover:cursor-pointer" onClick={handleClick}>Log Out</button>
           </li>
         </ul>
       </div>

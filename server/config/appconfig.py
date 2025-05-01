@@ -16,7 +16,7 @@ db = SQLAlchemy(model_class=Base)
 def DB_config(app):
     
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+    # app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     app.config["SQLALCHEMY_ECHO"] = True
     
     try:
@@ -41,7 +41,7 @@ def redis_config(app):
     
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
     
-    app.config["SESSION_COOKIE_NAME"] = "my_session"
+    app.config["SESSION_COOKIE_NAME"] = "session_id"
     
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     

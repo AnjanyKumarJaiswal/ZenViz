@@ -1,12 +1,13 @@
 from api.models.model_schema import UserItem , UserProfileItem
 from flask import request , jsonify , session , abort
-from config.appconfig import db  , redis_config
+from config.appconfig import db  
 
 def signup():
     try:
         result = request.get_json()
         print("*** Server Side Data Received ***", result)
         
+        username = result.get("username")
         fullName = result.get("fullName")
         email = result.get("email")
         password = result.get("password")
@@ -20,6 +21,7 @@ def signup():
         # hashed_password = bcrypt.generate_password_hash(password)
         
         signedUp_user = UserProfileItem(
+            username = username,
             fullName = fullName,
             email = email,
             password = password
@@ -30,12 +32,16 @@ def signup():
             
         new_login = UserItem(
             signupid= signedUp_user.id,
+            username=username,
             email=email,
             password=password           
         )
             
         db.session.add(new_login)
         db.session.commit()
+        
+        session["new_user_id"] = signedUp_user.id
+        session.modified = True
             
         return jsonify({"message": "User Logged in SuccessFully"}), 200
       
@@ -80,6 +86,8 @@ def login():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
     
+def logging_out_from_session():
+    return session.pop("user_id")
 
 def get_current_user():
     user_id = session.get("user_id")
@@ -91,4 +99,12 @@ def get_current_user():
     
     user = UserItem.query.filter_by(id=user_id).first()
     
-    return jsonify({"message":"User Authorized"}) , 200
+    data = {
+        "id" : user.id,
+        "username": user.username,
+        "email" : user.email, 
+    }
+    
+    print(data)
+    
+    return jsonify({"message":"User Authorized" , "data" : data}) , 200
