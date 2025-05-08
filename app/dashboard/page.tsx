@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import {httpClient} from "../lib/action"
 import { MainNavbar } from "@/components/navbar";
 import { Music } from "lucide-react";
-import { checkSession , httpClient } from "@/app/lib/action";
 
 export interface User {
   id: string,
@@ -39,7 +39,6 @@ export default function DashboardPage() {
     (async() =>{
       try{
         const resp = await httpClient.get("//localhost:5000/api/auth/callback/usersession")
-        // const resp = await checkSession();
         setUser(resp.data.data)
         console.log(resp.data)
       } catch (error){
