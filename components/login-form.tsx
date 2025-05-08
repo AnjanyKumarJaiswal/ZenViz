@@ -43,8 +43,8 @@ export function LoginForm() {
     <>
     <div className="mx-auto space-y-4 h-[500px] w-[450px] backdrop-blur-xs bg-slate-950/70 border-3 border-slate-800 rounded-md font-satoshi">
       <div className="space-y-2 text-center p-10">
-        <h1 className="text-3xl font-bold text-slate-100 dark:text-slate-900">Welcome Back</h1>
-        <p className="text-slate-300 dark:text-gray-700 ml-[15px] mr-[15px]">Hey, welcome back to your specialized personal space</p>
+        <h1 className="text-3xl font-bold text-slate-100 dark:text-slate-900">Welcome Back to ZenViz</h1>
+        <p className="text-slate-300 dark:text-gray-700 ml-[15px] mr-[15px]">Hey there, Zenviz is your specialized personal space as developers</p>
       </div>
       <form  onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
         {
