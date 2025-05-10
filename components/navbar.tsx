@@ -6,6 +6,7 @@ import { useRouter} from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Box , ChartNoAxesColumn , Bug , Settings , CircleUserRound , LogOut} from "lucide-react";
 import { logout } from "@/app/lib/action";
+import Image from "next/image";
 
 export function Navbar() {
   const router = useRouter();
@@ -51,7 +52,7 @@ export function Navbar() {
   );
 
   return (
-    <div className="relative w-full h-[110px] flex items-center justify-center px-4 md:px-8 font-satoshi shadow-xl ">
+    <div className="w-full h-[110px] flex items-center justify-between px-4 md:px-8 font-satoshi shadow-xl relative">
       <div className="flex items-center w-full md:w-auto">
         <button 
           className="md:hidden text-white p-2 z-50" 
@@ -59,8 +60,17 @@ export function Navbar() {
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
-        <div className="flex-grow flex justify-center md:justify-start">
-          <span className="text-xl font-poppins text-white">Task Tracker</span>
+        <div className="flex items-center">
+
+          <Image
+            src="/images/zenviz_logo.jpg"
+            alt="ZenViz Logo"
+            width={150}
+            height={90}
+            className="object-contain rounded-lg"
+            priority
+          />
+          
         </div>
         <div className="md:hidden flex items-center">
           <ul className="flex gap-2">
@@ -69,7 +79,7 @@ export function Navbar() {
                 className="bg-zinc-800 text-slate-100 px-2 py-1 rounded-2xl text-sm cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-green-500 hover:text-white"
                 onClick={() => handleClick("login")}
               >
-                Login
+                Log In
               </button>
             </li>
             <li>
@@ -92,10 +102,10 @@ export function Navbar() {
         <ul className="flex gap-4">
           <li>
             <button
-              className="bg-zinc-800 text-slate-100 px-4 py-2 rounded-2xl cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-green-500 hover:text-white"
+              className="text-slate-100 px-4 py-2 rounded-2xl cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-green-500 hover:text-white"
               onClick={() => handleClick("login")}
             >
-              Login
+              Log In
             </button>
           </li>
           <li>
@@ -103,7 +113,7 @@ export function Navbar() {
               className="bg-zinc-800 text-slate-100 px-4 py-2 rounded-2xl cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white"
               onClick={() => handleClick("signup")}
             >
-              Sign-Up
+              Sign Up
             </button>
           </li>
         </ul>

@@ -5,7 +5,7 @@
   import { useState } from "react"
   import { useRouter } from "next/navigation"
   import Link from "next/link"
-  import { signup } from "@/app/lib/action"
+  import { signup , checkSession } from "@/app/lib/action"
 
   export function SignupForm() {
     const router = useRouter()
@@ -20,12 +20,13 @@
       const formData = new FormData(event.currentTarget)
       try{
         const result = await signup(formData)
-        if(result){
+        if(result?.success === true){
           console.log("Redirecting.....")
           router.push("/dashboard")
           setStatus("Sign Up Done")
         } else{
           console.log("Failed to Login Please try again")
+          console.log(result?.error)
         }
       } catch(error){
         setStatus("Sign Up Failed")
@@ -37,7 +38,7 @@
       <div className="mx-auto space-y-4 h-[550px] w-[450px] backdrop-blur-xs bg-slate-950/70 border-2 border-slate-800 rounded-md font-satoshi">
         <div className="space-y-2 text-center p-4">
           <h1 className="text-3xl font-bold text-slate-100 dark:text-slate-300">Sign Up</h1>
-          <p className="text-slate-300 dark:text-gray-400 ml-[15px] mr-[15px]">Create an account to get started</p>
+          <p className="text-slate-300 dark:text-gray-400 ml-[15px] mr-[15px]">Create an account at ZenViz to get started</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
         {
