@@ -1,14 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuLink } from "@/components/ui/navigation-menu";
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { Box , ChartNoAxesColumn , Bug , Settings , CircleUserRound , LogOut} from "lucide-react";
+import { Box, ChartNoAxesColumn, Bug, Settings, CircleUserRound, LogOut } from "lucide-react";
 import { logout } from "@/app/lib/action";
 import Image from "next/image";
 
-export function Navbar() {
+interface NavbarProps {}
+
+const NavbarComponent: React.FC<NavbarProps> = (props) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -19,13 +21,12 @@ export function Navbar() {
     };
     checkDeviceType();
     window.addEventListener('resize', checkDeviceType);
-
     return () => window.removeEventListener('resize', checkDeviceType);
   }, []);
 
-  const handleClick = (formType: "login" | "signup" | "logout") => {
+  const handleAuthClick = useCallback((formType: "login" | "signup" | "logout") => {
     router.push(`/auth/${formType}`);
-  };
+  }, [router]);
 
   const navItems = ["Home", "Features", "Solutions", "Resources", "About"];
 
@@ -36,12 +37,12 @@ export function Navbar() {
           <NavigationMenuLink
             className="px-4 py-2 rounded-xl transition-all hover:bg-zinc-600 cursor-pointer text-lg"
             onClick={() => {
-              if(item == "Home"){
-                router.push("/")
-              } else{
+              if (item === "Home") {
+                router.push("/");
+              } else {
                 router.push(`/#${item.toLowerCase()}`);
-              if (isMobile) setIsOpen(false);
               }
+              if (isMobile) setIsOpen(false);
             }}
           >
             {item}
@@ -54,14 +55,13 @@ export function Navbar() {
   return (
     <div className="w-full h-[110px] flex items-center justify-between px-4 md:px-8 font-satoshi shadow-xl relative">
       <div className="flex items-center w-full md:w-auto">
-        <button 
-          className="md:hidden text-white p-2 z-50" 
+        <button
+          className="md:hidden text-white p-2 z-50"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
         <div className="flex items-center">
-
           <Image
             src="/images/zenviz_logo.jpg"
             alt="ZenViz Logo"
@@ -70,14 +70,13 @@ export function Navbar() {
             className="object-contain rounded-lg"
             priority
           />
-          
         </div>
         <div className="md:hidden flex items-center">
           <ul className="flex gap-2">
             <li>
               <button
                 className="bg-zinc-800 text-slate-100 px-2 py-1 rounded-2xl text-sm cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-green-500 hover:text-white"
-                onClick={() => handleClick("login")}
+                onClick={() => handleAuthClick("login")}
               >
                 Log In
               </button>
@@ -85,7 +84,7 @@ export function Navbar() {
             <li>
               <button
                 className="bg-zinc-800 text-slate-100 px-2 py-1 rounded-2xl text-sm cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white"
-                onClick={() => handleClick("signup")}
+                onClick={() => handleAuthClick("signup")}
               >
                 Sign-Up
               </button>
@@ -103,7 +102,7 @@ export function Navbar() {
           <li>
             <button
               className="text-slate-100 px-4 py-2 rounded-2xl cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-green-500 hover:text-white"
-              onClick={() => handleClick("login")}
+              onClick={() => handleAuthClick("login")}
             >
               Log In
             </button>
@@ -111,7 +110,7 @@ export function Navbar() {
           <li>
             <button
               className="bg-zinc-800 text-slate-100 px-4 py-2 rounded-2xl cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white"
-              onClick={() => handleClick("signup")}
+              onClick={() => handleAuthClick("signup")}
             >
               Sign Up
             </button>
@@ -128,54 +127,59 @@ export function Navbar() {
       )}
     </div>
   );
-}
+};
 
-export function MainNavbar(){
+export const Navbar = React.memo(NavbarComponent);
 
-  const router = useRouter()
+interface MainNavbarProps {}
 
-  const handleClick = async () => {
+const MainNavbarComponent: React.FC<MainNavbarProps> = (props) => {
+  const router = useRouter();
+
+  const handleLogoutClick = useCallback(async () => {
     const status = await logout();
     if (status === 200) {
       router.push("/");
     }
-  };
+  }, [router]);
 
   return (
     <>
-    <div className="flex font-satoshi justify-center items-center w-[300px] h-screen">
-      <div className="flex flex-col w-[280px] h-[650px] text-slate-100 rounded-3xl backdrop-blur-xs bg-slate-950/70 items-center border-2 border-slate-800">
-        <a className="p-8 font-bold text-3xl">Task Tracker</a>
-        <ul className="flex flex-col text-lg gap-8">
-          <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
-            <Box className="ml-[10px]"></Box>
-            <span>Dashboard</span>
-          </li>
-          <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
-            <ChartNoAxesColumn className="ml-[10px]"></ChartNoAxesColumn>
-            <span>Analytics</span>
-          </li>
-          <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
-            <Bug className="ml-[10px]"></Bug>
-            <span>Reports</span>
-          </li>
-          <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
-            <Settings className="ml-[10px]"></Settings>
-            <span>Settings</span>
-          </li>
-        </ul>
-        <ul className="flex flex-col mt-[70px] gap-2 text-md">
-          <li className="flex flex-row gap-2 items-center h-[50px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
-            <CircleUserRound className="ml-[10px]"/>
-            <span>Profile</span>
-          </li>
-          <li className="flex flex-row gap-2 items-center h-[50px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
-            <LogOut className="ml-[10px]"/>
-            <button className="hover:cursor-pointer" onClick={handleClick}>Log Out</button>
-          </li>
-        </ul>
+      <div className="flex font-satoshi justify-center items-center w-[300px] h-screen">
+        <div className="flex flex-col w-[280px] h-[650px] text-slate-100 rounded-3xl backdrop-blur-xs bg-slate-950/70 items-center border-2 border-slate-800">
+          <a className="p-8 font-bold text-3xl">Task Tracker</a>
+          <ul className="flex flex-col text-lg gap-8">
+            <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+              <Box className="ml-[10px]"></Box>
+              <span>Dashboard</span>
+            </li>
+            <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+              <ChartNoAxesColumn className="ml-[10px]"></ChartNoAxesColumn>
+              <span>Analytics</span>
+            </li>
+            <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+              <Bug className="ml-[10px]"></Bug>
+              <span>Reports</span>
+            </li>
+            <li className="flex flex-row gap-4 items-center h-[60px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+              <Settings className="ml-[10px]"></Settings>
+              <span>Settings</span>
+            </li>
+          </ul>
+          <ul className="flex flex-col mt-[70px] gap-2 text-md">
+            <li className="flex flex-row gap-2 items-center h-[50px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+              <CircleUserRound className="ml-[10px]" />
+              <span>Profile</span>
+            </li>
+            <li className="flex flex-row gap-2 items-center h-[50px] w-[230px] hover:cursor-pointer hover:rounded-xl hover:backdrop-blur-xs hover:bg-slate-500/20">
+              <LogOut className="ml-[10px]" />
+              <button className="hover:cursor-pointer" onClick={handleLogoutClick}>Log Out</button>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
     </>
-  )
-}
+  );
+};
+
+export const MainNavbar = React.memo(MainNavbarComponent);
