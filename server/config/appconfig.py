@@ -52,3 +52,13 @@ def redis_config(app):
         port=6379, 
         decode_responses=False
         )
+    
+    
+def mailServiceConfig(app):
+    app.config["MAIL_SERVER"] = os.getenv("AWS_MAIL_SERVICE")
+    app.config["MAIL_PORT"] = 587
+    app.config["MAIL_USERNAME"] = os.getenv("AWS_MAIL_USERNAME")
+    app.config["MAIL_PASSWORD"] = os.getenv("AWS_MAIL_PASSWORD")
+    app.config["MAIL_USE_TLS"] = True
+    app.config["MAIL_USE_SSL"] = False
+    app.config["MAIL_DEFAULT_SENDER"] = os.getenv("AWS_EMAIL_PROVIDER")

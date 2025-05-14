@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {Navbar} from '../components/navbar';
 import { useState, useEffect , useCallback } from 'react';
@@ -13,6 +13,8 @@ interface Word {
   className: string;
 }
 
+
+
 export default function Home() {
   const router = useRouter()
 
@@ -23,6 +25,8 @@ export default function Home() {
   const learnmoreclick = () => {
     router.push("/#features")
   }
+
+
 
   const zenvizSentence: Word[] = [
     { text: 'Q', className: "text-zinc-100 font-bold" },
@@ -42,7 +46,7 @@ export default function Home() {
   const zenvizfeatures: Word[] = [
     { text: 'Visualize', className: "text-blue-400" },
     { text: 'Learn Git', className: "text-green-400" },
-    { text: "Explore Repos", className: "text-purple-400" },
+    { text: "Explore Repo's", className: "text-purple-400" },
     { text: 'Understand Code', className: "text-orange-400" },
     { text: 'Deploy Apps', className: "text-red-400" },
     { text: 'Vibe to Music', className: "text-pink-400" }
@@ -76,10 +80,15 @@ export default function Home() {
 
   const cursorClass = "inline-block w-[3px] h-[0.8em] bg-zinc-300 -mb-[0.1em] ml-px";
 
+
+
+
   return (
     <>
     <main className='scroll-smooth'>
-      <section className="bg-[url('/images/moon_img.jpg')] bg-center bg-no-repeat bg-cover">
+
+      {/* Home SEction */}
+      <section className="hero bg-[url('/images/moon_img.jpg')] bg-center bg-no-repeat bg-cover">
         <div className='flex flex-col items-center w-full h-screen bg-blend-overlay'>
           <motion.div
             initial={{opacity: 0, y: -50}}
@@ -132,7 +141,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section id='features' className="bg-black bg-center bg-no-repeat bg-cover">
+
+      {/* Features Section */}
+      <section id='features' className="features bg-black bg-center bg-no-repeat bg-cover">
         <div className="flex flex-col justify-center items-center w-full min-h-screen font-satoshi p-4 sm:p-6 md:p-8">
           <motion.div
             initial={{opacity: 0, x: -100}}
@@ -160,7 +171,7 @@ export default function Home() {
                   <div className="flex space-x-1 my-1 md:my-2">
                     {zenvizSentence.map((word, idx) => (
                       <div key={`initial-word-${idx}`} className={cn(word.className, "whitespace-nowrap")}>
-                        {word.text}
+                        {word.text }
                       </div>
                     ))}
                   </div>
@@ -179,10 +190,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section id='solutions' className="bg-[url('/images/light_mist.jpg')] bg-center bg-no-repeat bg-cover">
+
+      {/* Solution Section */}
+      <section id='solutions' className="solutions bg-[url('/images/light_mist.jpg')] bg-center bg-no-repeat bg-cover">
         <div className='flex flex-col w-full h-screen'>
         </div>
       </section>
+
+
+      <section className='footer'>
+
+      </section>
+
+
     </main>
     </>
   );

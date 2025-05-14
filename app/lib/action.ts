@@ -3,6 +3,7 @@
 import {z} from "zod"
 import axios from "axios";
 import {useRouter} from "next/navigation"
+import { data } from "framer-motion/client";
 
 const SignUpSchema = z.object({
     fullName: z.string({
@@ -52,6 +53,27 @@ export async function login(formData: FormData) {
     }
 }
 
+export async function forgetpass(formData: FormData){
+    const email = formData.get("email")
+    // try{
+    //     const res = await httpClient.post("/api/auth/forget-password", {
+    //         email
+    //     });
+
+    //     console.log(res.data)
+
+    //     if(res.status === 200){
+    //         return {success: true, message: "Successfully Done" , data: res.data}
+    //     }
+
+
+    // } catch(error){
+    //     return {sucess:false , error: "Network Error"}
+    // }
+    const res = await httpClient.post("/api/auth/forget-password", {
+            email
+        });
+}
 
 export async function signup(formData: FormData) {
     const data = {
