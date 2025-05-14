@@ -107,65 +107,23 @@ def token_verification(token, serializer,  exp=2000):
 
 def userForgetPassword(serializer , mail):
     
-    # try:
-    #     email = request.get_json()
+    try:
+        email = request.get_json()
         
-    #     if not email:
-    #         return jsonify({"message":"No email provided by the user"}), 400
-        
-    #     userEmail = email.get("email")
-        
-    #     user = UserItem.query.filter_by(email=userEmail).first()
-        
-    #     token = generate_OTP_token(userEmail)
-        
-    #     Subject = "Reset your Password for your ZenViz Acc"
-        
-    #     reset_url = f"{os.getenv('FRONTEND_URL')}/auth/reset-password?token={token}"
-        
-    #     verification_email = f"""
-    #         Hi {user.username},
-
-    #         We received a request to reset your ZenViz account password.
-
-    #         Click the link below to reset your password:
-
-    #         {reset_url}
-
-    #         If you didn’t request this, you can ignore this email.
-
-    #         Thanks,
-    #         The ZenViz Team
-    #         """
-        
-    #     msg = Message(
-    #         sender= os.getenv("AWS_EMAIL_PROVIDER"),
-    #         recipients=[userEmail],
-    #         subject=Subject,
-    #         body=verification_email
-    #     )
-        
-    #     mail.send(msg)
-        
-    # except Exception as e:
-    #     print(f"[ERROR] {e}")
-    #     return jsonify({"message": "Internal Server Error"}), 500
-    email = request.get_json()
-        
-    if not email:
+        if not email:
             return jsonify({"message":"No email provided by the user"}), 400
         
-    userEmail = email.get("email")
+        userEmail = email.get("email")
         
-    user = UserItem.query.filter_by(email=userEmail).first()
+        user = UserItem.query.filter_by(email=userEmail).first()
         
-    token = generate_OTP_token(serializer , userEmail)
+        token = generate_OTP_token(userEmail)
         
-    Subject = "Reset your Password for your ZenViz Acc"
+        Subject = "Reset your Password for your ZenViz Acc"
         
-    reset_url = f"{os.getenv('FRONTEND_URL')}/auth/reset-password?token={token}"
+        reset_url = f"{os.getenv('FRONTEND_URL')}/auth/reset-password?token={token}"
         
-    verification_email = f"""
+        verification_email = f"""
             Hi {user.username},
 
             We received a request to reset your ZenViz account password.
@@ -180,16 +138,22 @@ def userForgetPassword(serializer , mail):
             The ZenViz Team
             """
         
-    msg = Message(
+        msg = Message(
             sender= os.getenv("AWS_EMAIL_PROVIDER"),
             recipients=[userEmail],
             subject=Subject,
             body=verification_email
         )
         
-    mail.send(msg)
+        mail.send(msg)
+        
+        return jsonify({'message': 'Password reset email sent'}), 200
+        
+    except Exception as e:
+        print(f"[ERROR] {e}")
+        return jsonify({"message": "Internal Server Error"}), 500
     
-    return jsonify({'message': 'Password reset email sent'}), 200
+    
         
 
 def get_current_user():
