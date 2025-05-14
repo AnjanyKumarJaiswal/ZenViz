@@ -1,6 +1,11 @@
 from api.models.model_schema import UserItem , UserProfileItem
 from flask import request , jsonify , session , abort
 from config.appconfig import db  
+from flask_mail import  Message
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def signup():
     try:
@@ -88,6 +93,68 @@ def login():
     
 def logging_out_from_session():
     return session.pop("user_id")
+
+
+def generate_OTP_token(serializer, email: str):
+    return serializer.dumps(email, salt="email-confirm")
+
+def token_verification(token, serializer,  exp=2000):
+    try:
+        email = serializer.loads(token, salt="email-confirm", max_age=exp)
+        return email
+    except Exception as e:
+        return jsonify({"error message": e}), 400
+
+def userForgetPassword(serializer , mail):
+    
+    try:
+        email = request.get_json()
+        
+        if not email:
+            return jsonify({"message":"No email provided by the user"}), 400
+        
+        userEmail = email.get("email")
+        
+        user = UserItem.query.filter_by(email=userEmail).first()
+        
+        token = generate_OTP_token(userEmail)
+        
+        Subject = "Reset your Password for your ZenViz Acc"
+        
+        reset_url = f"{os.getenv('FRONTEND_URL')}/auth/reset-password?token={token}"
+        
+        verification_email = f"""
+            Hi {user.username},
+
+            We received a request to reset your ZenViz account password.
+
+            Click the link below to reset your password:
+
+            {reset_url}
+
+            If you didn’t request this, you can ignore this email.
+
+            Thanks,
+            The ZenViz Team
+            """
+        
+        msg = Message(
+            sender= os.getenv("AWS_EMAIL_PROVIDER"),
+            recipients=[userEmail],
+            subject=Subject,
+            body=verification_email
+        )
+        
+        mail.send(msg)
+        
+        return jsonify({'message': 'Password reset email sent'}), 200
+        
+    except Exception as e:
+        print(f"[ERROR] {e}")
+        return jsonify({"message": "Internal Server Error"}), 500
+    
+    
+        
 
 def get_current_user():
     user_id = session.get("user_id")

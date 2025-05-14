@@ -20,6 +20,10 @@
   font-display: swap;
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 @theme {
   --font-poppins: "Poppins" , "san-serif";
   --font-satoshi: 'Satoshi' , "san-serif";
