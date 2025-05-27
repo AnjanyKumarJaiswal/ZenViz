@@ -36,7 +36,10 @@ export const InitialSentenceTyper: React.FC<InitialSentenceTyperProps> = ({
     let currentWordIdx = 0;
     let currentCharInWordIdx = 0;
     let initialTypingTimerId: NodeJS.Timeout | undefined;
-    let cursorBlinkTimerId: NodeJS.Timeout | undefined;
+    // let cursorBlinkTimerId: NodeJS.Timeout | undefined;
+    const cursorBlinkTimerId = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 500);
 
     const typeChar = () => {
       if (currentWordIdx >= zenvizSentence.length) {
@@ -72,9 +75,9 @@ export const InitialSentenceTyper: React.FC<InitialSentenceTyperProps> = ({
     };
 
     initialTypingTimerId = setTimeout(typeChar, charDelayMs); // Start typing
-    cursorBlinkTimerId = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500); // Cursor blink speed
+    // cursorBlinkTimerId = setInterval(() => {
+    //   setShowCursor(prev => !prev);
+    // }, 500); // Cursor blink speed
 
     return () => {
       if (initialTypingTimerId) clearTimeout(initialTypingTimerId);
