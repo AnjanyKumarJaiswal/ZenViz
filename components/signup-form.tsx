@@ -35,9 +35,9 @@
     }
 
     return (
-      <div className="mx-auto space-y-4 h-[550px] w-[450px] backdrop-blur-xs bg-slate-950/70 border-2 border-slate-800 rounded-md font-satoshi">
+      <div className="mx-auto space-y-4 h-[570px] w-[450px] backdrop-blur-xs bg-slate-950/70 border-2 rounded-xl font-satoshi border-slate-700">
         <div className="space-y-2 text-center p-4">
-          <h1 className="text-3xl font-bold text-slate-100 dark:text-slate-300">Sign Up</h1>
+          <h1 className="text-3xl text-slate-100 dark:text-slate-300">Sign Up</h1>
           <p className="text-slate-300 dark:text-gray-400 ml-[15px] mr-[15px]">Create an account at ZenViz to get started</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
@@ -109,7 +109,7 @@
           </div> */}
           <button
             type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isLoading}
           >
             {isLoading ? "Creating account..." : "Create account"}
