@@ -41,10 +41,10 @@ export function LoginForm() {
   }
   return (
     <>
-    <div className="mx-auto space-y-4 h-[500px] w-[450px] backdrop-blur-xs bg-slate-950/70 border-3 border-slate-800 rounded-md font-satoshi">
+    <div className="mx-auto space-y-4 h-[520px] w-[450px] backdrop-blur-xs bg-slate-950/70 border-2 border-slate-700 rounded-md font-satoshi">
       <div className="space-y-2 text-center p-10">
-        <h1 className="text-3xl font-bold text-slate-100 dark:text-slate-900">Welcome Back to ZenViz</h1>
-        <p className="text-slate-300 dark:text-gray-700 ml-[15px] mr-[15px]">Hey there, Zenviz is your specialized personal space as developers</p>
+        <h1 className="text-3xl text-slate-100 dark:text-slate-900">Welcome Back to ZenViz</h1>
+        <p className="text-slate-300 dark:text-gray-700 ml-[15px] mr-[15px]">Hey there, Zenviz is your specialized personal space as Developers</p>
       </div>
       <form  onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
         {
@@ -62,7 +62,7 @@ export function LoginForm() {
             type="email"
             placeholder="Enter your Email"
             required
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
+            className="w-full px-3 py-2 text-slate-300 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
           />
         </div>
         <div className="space-y-2">
@@ -85,7 +85,7 @@ export function LoginForm() {
         </div>
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={isLoading}
         >
           {isLoading ? "Logging in..." : "Login"}

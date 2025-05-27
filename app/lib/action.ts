@@ -2,8 +2,6 @@
 
 import {z} from "zod"
 import axios from "axios";
-import {useRouter} from "next/navigation"
-import { data } from "framer-motion/client";
 
 const SignUpSchema = z.object({
     fullName: z.string({
@@ -19,9 +17,17 @@ const SignUpSchema = z.object({
     ).trim(),
     password: z.string().min(4,{message:"Password must be at least 4 characters"}).trim(),
     reTypepassword: z.string().min(4,{message:"Re-Entered Password must match the original Password"}).optional()
-})  
+})
 
-export const httpClient = await axios.create({
+export const newPassword = z.object({
+    new_password: z.string().min(6,{message:"Password must be at least 6 characters"}),
+    confirm_password: z.string()
+}).refine((data) => data.new_password === data.confirm_password , {
+    message: "Passwords do not match",
+    path: ["confirm_password"]
+})
+
+export const httpClient = axios.create({
     baseURL: "http://localhost:5000",
     withCredentials: true,
     headers: {
@@ -55,24 +61,22 @@ export async function login(formData: FormData) {
 
 export async function forgetpass(formData: FormData){
     const email = formData.get("email")
-    // try{
-    //     const res = await httpClient.post("/api/auth/forget-password", {
-    //         email
-    //     });
-
-    //     console.log(res.data)
-
-    //     if(res.status === 200){
-    //         return {success: true, message: "Successfully Done" , data: res.data}
-    //     }
-
-
-    // } catch(error){
-    //     return {sucess:false , error: "Network Error"}
-    // }
-    const res = await httpClient.post("/api/auth/forget-password", {
+    
+    try{
+        const res = await httpClient.post("/api/auth/forget-password", {
             email
         });
+
+        console.log(res.data)
+
+        if(res.status === 200){
+            return {success: true, message: "Successfully Done" , data: res.data}
+        }
+
+    } catch(error){
+        return {sucess:false , error: "Network Error"}
+    }
+
 }
 
 export async function signup(formData: FormData) {
@@ -90,24 +94,14 @@ export async function signup(formData: FormData) {
     }
 
     try{
-        // const response = await fetch("http://localhost:5000/api/auth/signup",{
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type":"application/json"
-        //     },
-        //     body: JSON.stringify(data),
-        //     credentials:"include",
-        // })
 
         const response = await httpClient.post("/api/auth/signup",data)
 
         console.log(response.data)
 
         if(response.status === 200){
-            // const data = await response.data
-            return { success: true, "message":"New Sign Up and Authorized" , data: response.data };
+            return { success: true, "message":"New Sign Up and Authorized"};
         } else{
-            // Return the error status for proper handling
             return { success: false, error: "Login failed" }
         }
     } catch(err){
