@@ -8,9 +8,7 @@ import { Box, ChartNoAxesColumn, Bug, Settings, CircleUserRound, LogOut } from "
 import { logout } from "@/app/lib/action";
 import Image from "next/image";
 
-interface NavbarProps {}
-
-const NavbarComponent: React.FC<NavbarProps> = (props) => {
+const NavbarComponent: React.FC = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -131,9 +129,7 @@ const NavbarComponent: React.FC<NavbarProps> = (props) => {
 
 export const Navbar = React.memo(NavbarComponent);
 
-interface MainNavbarProps {}
-
-const MainNavbarComponent: React.FC<MainNavbarProps> = (props) => {
+const MainNavbarComponent: React.FC = () => {
   const router = useRouter();
 
   const handleLogoutClick = useCallback(async () => {

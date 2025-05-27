@@ -13,44 +13,41 @@ interface Word {
   className: string;
 }
 
+// Move these arrays outside the component
+const zenvizSentence: Word[] = [
+  { text: 'Q', className: "text-zinc-100 font-bold" },
+  { text: '.', className: "text-zinc-100 font-bold" },
+  { text: 'What ', className: "text-zinc-100 font-bold" },
+  { text: 'can ', className: "text-zinc-100 font-bold" },
+  { text: 'you ', className: "text-zinc-100 font-bold" },
+  { text: 'do ', className: "text-zinc-100 font-bold" },
+  { text: 'with ', className: "text-zinc-100 font-bold" },
+  { text: 'ZenViz ', className: "text-zinc-500 font-bold" },
+  { text: '?', className: "text-zinc-100 font-bold" },
+  { text: '.', className: "text-zinc-100 font-bold" },
+  { text: '.', className: "text-zinc-100 font-bold" },
+  { text: '.', className: "text-zinc-100 font-bold" },
+];
 
+const zenvizfeatures: Word[] = [
+  { text: 'Visualize', className: "text-blue-400" },
+  { text: 'Learn Git', className: "text-green-400" },
+  { text: "Explore Repo's", className: "text-purple-400" },
+  { text: 'Understand Code', className: "text-orange-400" },
+  { text: 'Deploy Apps', className: "text-red-400" },
+  { text: 'Vibe to Music', className: "text-pink-400" }
+];
 
 export default function Home() {
-  const router = useRouter()
+  const router = useRouter();
 
-  const trymeclick = () =>{
-    router.push("/auth/login")
-  }
+  const trymeclick = () => {
+    router.push("/auth/login");
+  };
 
   const learnmoreclick = () => {
-    router.push("/#features")
-  }
-
-
-
-  const zenvizSentence: Word[] = [
-    { text: 'Q', className: "text-zinc-100 font-bold" },
-    { text: '.', className: "text-zinc-100 font-bold" },
-    { text: 'What ', className: "text-zinc-100 font-bold" },
-    { text: 'can ', className: "text-zinc-100 font-bold" },
-    { text: 'you ', className: "text-zinc-100 font-bold" },
-    { text: 'do ', className: "text-zinc-100 font-bold" },
-    { text: 'with ', className: "text-zinc-100 font-bold" },
-    { text: 'ZenViz ', className: "text-zinc-500 font-bold" },
-    { text: '?', className: "text-zinc-100 font-bold" },
-    { text: '.', className: "text-zinc-100 font-bold" },
-    { text: '.', className: "text-zinc-100 font-bold" },
-    { text: '.', className: "text-zinc-100 font-bold" },
-  ];
-
-  const zenvizfeatures: Word[] = [
-    { text: 'Visualize', className: "text-blue-400" },
-    { text: 'Learn Git', className: "text-green-400" },
-    { text: "Explore Repo's", className: "text-purple-400" },
-    { text: 'Understand Code', className: "text-orange-400" },
-    { text: 'Deploy Apps', className: "text-red-400" },
-    { text: 'Vibe to Music', className: "text-pink-400" }
-  ];
+    router.push("/#features");
+  };
 
   const INITIAL_SENTENCE_CHAR_DELAY_MS = 150;
   const TYPING_SPEED_MS = 60;
@@ -76,11 +73,9 @@ export default function Home() {
       setCurrentFeatureIndex((prevIndex) => (prevIndex + 1) % zenvizfeatures.length);
     }, cycleDelay);
     return () => clearTimeout(featureCycleTimer);
-  }, [isInitialSentenceComplete, currentFeatureIndex, zenvizfeatures.length]);
+  }, [isInitialSentenceComplete, currentFeatureIndex]);
 
   const cursorClass = "inline-block w-[3px] h-[0.8em] bg-zinc-300 -mb-[0.1em] ml-px";
-
-
 
 
   return (

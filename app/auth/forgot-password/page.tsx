@@ -28,7 +28,7 @@ export default function ForgotPassword(){
             }
         } catch(e){
             setStatus("Failed to Send Reset Password Change Email , Kindly Re-Check Your Email")
-            return ({"mesage":"An unexpected error occurred"})
+            return ({"mesage":"An unexpected error occurred", "error": e})
         }
     }
 

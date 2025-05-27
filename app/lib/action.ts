@@ -74,7 +74,7 @@ export async function forgetpass(formData: FormData){
         }
 
     } catch(error){
-        return {sucess:false , error: "Network Error"}
+        return {sucess:false , error: error}
     }
 
 }
@@ -116,7 +116,7 @@ export async function logout() {
       return response.status;
     } catch (error) {
       console.log("Failed to Log-Out");
-      return null;
+      return {"message": error};
     }
   }
   
