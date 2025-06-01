@@ -231,16 +231,15 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col gap-4 w-full h-screen items-center justify-center">
           <div className="w-full max-w-7xl px-4 py-8 text-white">
-            {/* Section Heading */}
+
             <div className="flex justify-center items-center">
               <p className="p-4 text-5xl">
                Level Up Your Workflow
               </p>
             </div>
 
-            {/* Cards Grid */}
             <div className="grid grid-cols-1 hover:cursor-pointer  sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {/* Card 1 */}
+
               <div className="bg-black/10 backdrop-blur-md border-2 h-[200px] border-blue-300 rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform">
                 <Brain className="w-8 h-8 mb-3" />
                 <h3 className="text-lg font-semibold mb-1">Repo Visualizer</h3>
@@ -249,7 +248,7 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Card 2 */}
+
               <div className="bg-black/10 backdrop-blur-md border-2 border-blue-300 rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform">
                 <GitBranch className="w-8 h-8 mb-3" />
                 <h3 className="text-lg font-semibold mb-1">Real-World Git</h3>
@@ -258,7 +257,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Card 3 */}
               <div className="bg-black/10 backdrop-blur-md border-2 border-blue-300 rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform">
                 <ShieldCheck className="w-8 h-8 mb-3" />
                 <h3 className="text-lg font-semibold mb-1">Vulnerability Scan</h3>
@@ -275,7 +273,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Card 5 */}
               <div className="bg-black/10 backdrop-blur-md border-2 border-blue-300 rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform">
                 <GraduationCap className="w-8 h-8 mb-3" />
                 <h3 className="text-lg font-semibold mb-1">GitHub Learning</h3>
@@ -284,7 +281,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Card 6 */}
               <div className="bg-black/10 backdrop-blur-md border-2 border-blue-300 rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform">
                 <BarChart3 className="w-8 h-8 mb-3" />
                 <h3 className="text-lg font-semibold mb-1">Code Metrics</h3>
@@ -301,8 +297,6 @@ export default function Home() {
       <section id='about'>
               <Footer/>
       </section>
-
-
     </main>
     </>
   );

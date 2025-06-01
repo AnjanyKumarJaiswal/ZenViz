@@ -1,5 +1,5 @@
 // import { FaTwitter, linked } from "lucide-react";
-import { Linkedin , Twitter, Github } from "lucide-react";
+import { Linkedin , Twitter} from "lucide-react";
 
 
 const Footer = () => {
