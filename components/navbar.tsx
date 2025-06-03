@@ -25,9 +25,9 @@ const NavbarComponent: React.FC = () => {
     return () => window.removeEventListener('resize', checkDeviceType);
   }, []);
 
-  const handleAuthClick = useCallback((formType: "login" | "signup" | "logout") => {
-    router.push(`/auth/${formType}`);
-  }, [router]);
+  // const handleAuthClick = useCallback((formType: "login" | "signup" | "logout") => {
+  //   router.push(`/auth/${formType}`);
+  // }, [router]);
 
 
   const navItems = ["Home", "Features", "Solutions", "About"];
