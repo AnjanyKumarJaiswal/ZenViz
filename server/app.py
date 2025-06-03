@@ -13,7 +13,7 @@ app = Flask(__name__)
 CORS(
     app,
     supports_credentials=True,
-    origins="https://zen-viz.vercel.app/",
+    origins="https://zen-viz.vercel.app",
     allow_headers=["Content-Type", "Authorization"]
     )
 
