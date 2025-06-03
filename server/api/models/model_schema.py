@@ -33,3 +33,7 @@ class UserItem(db.Model):
         return f"User Email:{self.email}"
     
     
+class EmailWaitList(db.Model):
+    __tablename__ = "waitinglist"
+    id: Mapped[str] = mapped_column(sa.String(32), primary_key=True, unique=True, default=lambda: uuid4().hex)
+    email: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
