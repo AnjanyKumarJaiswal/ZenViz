@@ -7,11 +7,14 @@ import { Menu, X } from "lucide-react";
 import { Box, ChartNoAxesColumn, Bug, Settings, CircleUserRound, LogOut } from "lucide-react";
 import { logout } from "@/app/lib/action";
 import Image from "next/image";
+import { WaitListForm } from '@/components/waitlistform';
 
 const NavbarComponent: React.FC = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showWaitlistForm, setShowWaitlistForm] = useState(false);
+
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -26,7 +29,8 @@ const NavbarComponent: React.FC = () => {
     router.push(`/auth/${formType}`);
   }, [router]);
 
-  const navItems = ["Home", "Features", "Solutions", "Resources", "About"];
+
+  const navItems = ["Home", "Features", "Solutions", "About"];
 
   const NavLinks = () => (
     <NavigationMenuList className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-4 md:gap-10 text-slate-300`}>
@@ -53,77 +57,132 @@ const NavbarComponent: React.FC = () => {
   return (
     <div className="w-full h-[110px] flex items-center justify-between px-4 md:px-8 font-satoshi shadow-xl relative">
       <div className="flex items-center w-full md:w-auto">
-        <button
-          className="md:hidden text-white p-2 z-50"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-        <div className="flex items-center">
-          <Image
-            src="/images/zenviz_logo.jpg"
-            alt="ZenViz Logo"
-            width={150}
-            height={90}
-            className="object-contain rounded-lg"
-            priority
-          />
+        <div className="flex items-center gap-4">
+          {isMobile && (
+            <button
+              className="text-white p-2 z-50"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          )}
+          {!isMobile && (
+            <Image
+              src="/images/zenviz_logo.jpg"
+              alt="ZenViz Logo"
+              width={130}
+              height={70}
+              className="object-contain rounded-lg"
+              priority
+            />
+          )}
         </div>
-        <div className="md:hidden flex items-center">
-          <ul className="flex gap-2">
-            <li>
-              <button
-                className="bg-zinc-800 text-slate-100 px-2 py-1 rounded-2xl text-sm cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-green-500 hover:text-white"
-                onClick={() => handleAuthClick("login")}
-              >
-                Log In
-              </button>
-            </li>
-            <li>
-              <button
-                className="bg-zinc-800 text-slate-100 px-2 py-1 rounded-2xl text-sm cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white"
-                onClick={() => handleAuthClick("signup")}
-              >
-                Sign-Up
-              </button>
-            </li>
-          </ul>
+
+        {/* === MOBILE LOGIN/SIGNUP (FUTURE USE) === */}
+        {/* 
+        <div className="md:hidden flex items-center gap-2 ml-4">
+          <button
+            className="bg-zinc-800 text-slate-100 px-3 py-1 rounded-2xl text-sm transition-all duration-300 hover:bg-blue-500"
+            onClick={() => handleAuthClick("login")}
+          >
+            Log In
+          </button>
+          <button
+            className="bg-zinc-800 text-slate-100 px-3 py-1 rounded-2xl text-sm transition-all duration-300 hover:bg-purple-500"
+            onClick={() => handleAuthClick("signup")}
+          >
+            Sign Up
+          </button>
+        </div>
+        */}
+
+        <div className="md:hidden p-4 ml-auto flex items-center" onClick={() => setShowWaitlistForm(true)}>
+          <div className="bg-slate-300 rounded-2xl px-4 py-2 flex items-center gap-2 cursor-pointer transition-colors duration-300 hover:bg-black hover:text-white">
+            <span className="font-semibold text-black hover:text-white transition-colors duration-300">
+              Join Waitlist ➔
+            </span>
+          </div>
         </div>
       </div>
+
       <div className="hidden md:flex justify-center items-center absolute left-1/2 transform -translate-x-1/2">
-        <NavigationMenu className="bg-zinc-800 rounded-xl">
+        <NavigationMenu className="rounded-xl">
           <NavLinks />
         </NavigationMenu>
       </div>
-      <div className="hidden md:flex absolute right-4">
-        <ul className="flex gap-4">
-          <li>
+
+      {/* === DESKTOP LOGIN/SIGNUP (FUTURE USE) === */}
+      {/* 
+      <div className="hidden md:flex absolute right-4 gap-4">
+        <button
+          className="text-slate-100 px-4 py-2 rounded-2xl transition-all duration-300 hover:bg-blue-500"
+          onClick={() => handleAuthClick("login")}
+        >
+          Log In
+        </button>
+        <button
+          className="bg-zinc-800 text-slate-100 px-4 py-2 rounded-2xl transition-all duration-300 hover:bg-purple-500"
+          onClick={() => handleAuthClick("signup")}
+        >
+          Sign Up
+        </button>
+      </div>
+      */}
+      <div className="hidden md:flex absolute right-4" onClick={() => setShowWaitlistForm(true)}>
+        <button
+          type="button"
+          className="group relative overflow-hidden bg-white text-black hover:border-2 hover:border-slate-100 rounded-2xl px-6 py-3 flex items-center gap-3"
+        >
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 bg-black transform scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100 z-0 pointer-events-none"
+          />
+          <span className="relative z-10 font-semibold text-lg group-hover:text-white">
+            Join Waitlist ➔
+          </span>
+        </button>
+      </div>
+
+      {/* mobile navbar dropdown tabs :) */}
+      {isMobile && isOpen && (
+        <div className="absolute top-[80px] left-0 w-full bg-zinc-900 flex flex-col items-center gap-6 py-10 transition-all duration-300 z-40">
+          <Image
+            src="/images/zenviz_logo.jpg"
+            alt="ZenViz Logo"
+            width={130}
+            height={70}
+            className="object-contain rounded-lg"
+            priority
+          />
+
+          <NavigationMenu>
+            <NavLinks />
+          </NavigationMenu>
+
+          {/* Optional: Login/Signup for future */}
+          {/*
+          <div className="flex gap-4">
             <button
-              className="text-slate-100 px-4 py-2 rounded-2xl cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-green-500 hover:text-white"
+              className="bg-blue-500 text-white px-4 py-2 rounded-2xl"
               onClick={() => handleAuthClick("login")}
             >
               Log In
             </button>
-          </li>
-          <li>
             <button
-              className="bg-zinc-800 text-slate-100 px-4 py-2 rounded-2xl cursor-pointer transition-all duration-500 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white"
+              className="bg-purple-500 text-white px-4 py-2 rounded-2xl"
               onClick={() => handleAuthClick("signup")}
             >
               Sign Up
             </button>
-          </li>
-        </ul>
-      </div>
-
-      {isMobile && isOpen && (
-        <div className="fixed inset-0 bg-zinc-800 z-40 flex flex-col items-center justify-center">
-          <NavigationMenu>
-            <NavLinks />
-          </NavigationMenu>
+          </div>
+          */}
         </div>
       )}
+
+
+      {showWaitlistForm && <WaitListForm onClose={() => setShowWaitlistForm(false)} />}
     </div>
+
   );
 };
 

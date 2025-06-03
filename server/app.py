@@ -2,7 +2,8 @@ from flask import Flask, redirect , session , jsonify , request
 from flask_cors import CORS
 from flask_session import Session
 from config.appconfig import DB_config , redis_config , mailServiceConfig
-from api.services.auth import login , signup , get_current_user ,logging_out_from_session , userForgetPassword , token_verification , new_passowrd
+from api.services.auth import login , signup , get_current_user ,logging_out_from_session , userForgetPassword , token_verification , new_passowrd 
+from api.services.waitinglist import waitlist
 from flask_bcrypt import Bcrypt
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail 
@@ -72,6 +73,10 @@ def change_of_password():
 def current_user():
     return get_current_user()
     
+
+@app.route("/api/waitlist", methods=["POST"])
+def emailwaitinglist():
+    return waitlist()
     
 
 if __name__ == "__main__":

@@ -36,6 +36,22 @@ export const httpClient = axios.create({
     }
 })
 
+export async function joinwaitlist(formData: FormData){
+    const email = formData.get("email")
+
+    try{
+        const res = await httpClient.post("/api/waitlist",{
+            email
+        })
+
+        if(res.status === 200){
+            return {success: true, message:res.data.message}
+        }
+    } catch(error){
+        return {"message": error}
+    }
+}
+
 export async function login(formData: FormData) {
     const email = formData.get("email");
     const password = formData.get("password");
