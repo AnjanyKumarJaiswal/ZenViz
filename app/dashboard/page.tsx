@@ -44,10 +44,10 @@ export default function DashboardPage() {
       } catch (error){
         console.log("Not Authenticated")
         router.push("/auth/login")
+        return ({"message": error})
       }
     })()
-
-  }, []);
+  }, [router]);
 
 
   return (
