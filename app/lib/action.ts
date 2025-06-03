@@ -28,7 +28,7 @@ export const newPassword = z.object({
 })
 
 export const httpClient = axios.create({
-    baseURL: "https://zenviz-n6th.onrender.com",
+    baseURL: "http://localhost:5000",
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
