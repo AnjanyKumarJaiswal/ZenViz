@@ -4,7 +4,7 @@ import {Navbar} from '../components/navbar';
 import { useState, useEffect , useCallback } from 'react';
 import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
 import { useRouter } from 'next/navigation';
-import {motion} from "framer-motion";
+// import {motion} from "framer-motion";
 import { cn } from "@/lib/utils";
 import { InitialSentenceTyper } from '@/components/InitialSentenceTyper';
 import Footer from "@/components/footer";
@@ -111,34 +111,34 @@ export default function Home() {
       {/* Home SEction */}
       <section className="hero bg-[url('/images/moon_img.jpg')] bg-center bg-no-repeat bg-cover ">
         <div className='flex flex-col items-center w-full h-screen bg-blend-overlay '>
-          <motion.div
-            initial={{opacity: 0, y: -50}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 1.25}}
+          <div
+            // initial={{opacity: 0, y: -50}}
+            // animate={{opacity: 1, y: 0}}
+            // transition={{duration: 1.25}}
             className='w-full'>
             <Navbar/>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.5 }}
+          </div>
+          <div
+            // initial={{ opacity: 0, y: 100 }}
+            // animate={{ opacity: 1, y: 0 }}
+            // transition={{ duration: 1.5 }}
             className="flex flex-col font-satoshi p-4 sm:p-6 lg:p-8 w-full max-w-4xl mt-16 md:mt-24 justify-center items-center text-center"
           >
             <p className="text-5xl sm:text-7xl lg:text-8xl text-slate-200">
               ZenViz
             </p>
-            <motion.p
-              initial={{opacity: 0, x: -100}}
-              animate={{opacity: 1, x: 0}}
-              transition={{duration: 1.25}}
+            <p
+              // initial={{opacity: 0, x: -100}}
+              // animate={{opacity: 1, x: 0}}
+              // transition={{duration: 1.25}}
               className="mt-4 text-lg sm:text-xl lg:text-2xl text-zinc-500 font-bold max-w-2xl">
               See code. Feel flow. Master real-world development and deployment.
-            </motion.p>
+            </p>
             <div className="flex flex-wrap gap-4 justify-center items-center mt-6">
-              <motion.button
-                initial={{ opacity: 0, x: -200 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.95 }}
+              <button
+                // initial={{ opacity: 0, x: -200 }}
+                // animate={{ opacity: 1, x: 0 }}
+                // transition={{ duration: 0.95 }}
                 onClick={trymeclick}
                 className="group relative overflow-hidden text-slate-100 font-semibold hover:border-3 hover:border-blue-600 cursor-pointer w-36 sm:w-40 h-12 rounded-xl bg-blue-600 text-sm sm:text-base"
               >
@@ -149,12 +149,12 @@ export default function Home() {
                 <span className="relative z-10 transition-colors duration-300 ease-in-out group-hover:text-blue-600">
                   Try ZenViz
                 </span>
-              </motion.button>
+              </button>
 
-              <motion.button
-                initial={{ opacity: 0, x: 200 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.95 }}
+              <button
+                // initial={{ opacity: 0, x: 200 }}
+                // animate={{ opacity: 1, x: 0 }}
+                // transition={{ duration: 0.95 }}
                 onClick={learnmoreclick}
                 className="group relative overflow-hidden text-zinc-900 font-semibold hover:border-3 hover:border-slate-100 cursor-pointer w-36 sm:w-40 h-12 rounded-xl bg-slate-200 text-sm sm:text-base"
               >
@@ -165,17 +165,17 @@ export default function Home() {
                 <span className="relative z-10 transition-colors duration-300 ease-in-out group-hover:text-white">
                   Learn more →
                 </span>
-              </motion.button>
+              </button>
 
             </div>
-            <motion.p
-              initial={{opacity: 0, x: 100}}
-              animate={{opacity: 1, x: 0}}
-              transition={{duration: 1.25}}
+            <p
+              // initial={{opacity: 0, x: 100}}
+              // animate={{opacity: 1, x: 0}}
+              // transition={{duration: 1.25}}
               className="mt-6 text-base sm:text-lg lg:text-xl text-slate-400 max-w-3xl">
               An immersive Git/Github-powered learning experience that helps you visualize, build, deploy, and grow — the way real developers do it.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
         </div>
       </section>
 
@@ -185,10 +185,10 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-blue-600/90 to-transparent blur-2xl z-10 pointer-events-none"></div>
 
         <div className="relative z-20 flex flex-col justify-center items-center w-full min-h-[60vh] sm:min-h-[75vh] md:min-h-screen font-satoshi p-4 sm:p-6 md:p-8">
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
+          <div
+            // initial={{ opacity: 0, x: -100 }}
+            // animate={{ opacity: 1, x: 0 }}
+            // transition={{ duration: 1 }}
             className="flex flex-col w-full max-w-5xl"
           >
             <div
@@ -237,7 +237,7 @@ export default function Home() {
                 </>
               )}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
       {/* <section id="solutions" className="relative overflow-hidden bg-black">
