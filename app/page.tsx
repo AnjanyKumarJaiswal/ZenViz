@@ -52,9 +52,9 @@ const zenvizfeatures: Word[] = [
 export default function Home() {
   const router = useRouter();
 
-  const trymeclick = () => {
-    router.push("/auth/login");
-  };
+  // const trymeclick = () => {
+  //   router.push("/auth/login");
+  // };
 
   const learnmoreclick = () => {
     router.push("/#features");
