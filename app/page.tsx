@@ -139,7 +139,7 @@ export default function Home() {
                 // initial={{ opacity: 0, x: -200 }}
                 // animate={{ opacity: 1, x: 0 }}
                 // transition={{ duration: 0.95 }}
-                onClick={trymeclick}
+{/*                 onClick={trymeclick} */}
                 className="group relative overflow-hidden text-slate-100 font-semibold hover:border-3 hover:border-blue-600 cursor-pointer w-36 sm:w-40 h-12 rounded-xl bg-blue-600 text-sm sm:text-base"
               >
                 <span
