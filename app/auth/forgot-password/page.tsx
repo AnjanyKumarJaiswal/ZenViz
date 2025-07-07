@@ -4,7 +4,7 @@ import { Navbar } from "@/components/navbar"
 import { useState } from "react"
 import { MailCheck , Fingerprint} from "lucide-react"
 import Link from "next/link"
-import { forgetpass } from "@/app/lib/action"
+import { forgetpass } from "@/app/lib/auth"
 import { useRouter } from "next/navigation"
 
 export default function ForgotPassword(){

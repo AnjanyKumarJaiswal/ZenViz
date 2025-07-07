@@ -1,11 +1,10 @@
-// components/OverlayForm.tsx
 'use client';
 
 import React, { useEffect, useRef , useState} from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-import {joinwaitlist } from "@/app/lib/action";
+import {joinwaitlist } from "@/app/lib/auth";
 
 interface WaitListFormProps {
   onClose: () => void;
