@@ -5,8 +5,9 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuL
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Box, ChartNoAxesColumn, Bug, Settings, CircleUserRound, LogOut } from "lucide-react";
-import { logout } from "@/app/lib/action";
+import { logout } from "@/app/lib/auth";
 import Image from "next/image";
+import Link from "next/link";
 import { WaitListForm } from '@/components/waitlistform';
 
 const NavbarComponent: React.FC = () => {
@@ -37,7 +38,7 @@ const NavbarComponent: React.FC = () => {
       {navItems.map((item) => (
         <NavigationMenuItem key={item}>
           <NavigationMenuLink
-            className="px-4 py-2 rounded-xl transition-all hover:bg-zinc-600 cursor-pointer text-lg"
+            className="px-4 py-2 rounded-xl transition-all hover:bg-slate-200 duration-275 ease-in-out cursor-pointer text-lg"
             onClick={() => {
               if (item === "Home") {
                 router.push("/");
@@ -63,19 +64,19 @@ const NavbarComponent: React.FC = () => {
               className="text-white p-2 z-50"
               onClick={() => setIsOpen(!isOpen)}
             >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+              {isOpen ? <X size={32} /> : <Menu size={32} />}
             </button>
           )}
-          {!isMobile && (
+          {/* {!isMobile && (
             <Image
               src="/images/zenviz_logo.jpg"
               alt="ZenViz Logo"
-              width={130}
-              height={70}
+              width={150}
+              height={90}
               className="object-contain rounded-lg"
               priority
             />
-          )}
+          )} */}
         </div>
 
         {/* === MOBILE LOGIN/SIGNUP (FUTURE USE) === */}
@@ -105,11 +106,25 @@ const NavbarComponent: React.FC = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex justify-center items-center absolute left-1/2 transform -translate-x-1/2">
-        <NavigationMenu className="rounded-xl">
+      {/* <div className="hidden rounded-xl md:flex bg-zinc-600/60 backdrop-blur-md justify-center items-center absolute left-1/2 transform -translate-x-1/2">
+        <NavigationMenu className="rounded-xl ">
+          <NavLinks />
+        </NavigationMenu>
+      </div> */}
+      <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 rounded-xl bg-zinc-700/10 backdrop-blur-xl border-3 border-zinc-500/30 shadow-lg justify-center items-center">
+          <Link href="/"><Image
+              src="/images/zenviz_logo.jpg"
+              alt="ZenViz Logo"
+              width={110}
+              height={40}
+              className="p-2 rounded-xl object-contain rounded-lg"
+              priority
+          /></Link>
+        <NavigationMenu className="p-2 rounded-xl">
           <NavLinks />
         </NavigationMenu>
       </div>
+
 
       {/* === DESKTOP LOGIN/SIGNUP (FUTURE USE) === */}
       {/* 

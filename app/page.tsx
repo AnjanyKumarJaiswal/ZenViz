@@ -4,7 +4,6 @@ import {Navbar} from '../components/navbar';
 import { useState, useEffect , useCallback } from 'react';
 import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
 import { useRouter } from 'next/navigation';
-// import {motion} from "framer-motion";
 import { cn } from "@/lib/utils";
 import { InitialSentenceTyper } from '@/components/InitialSentenceTyper';
 import Footer from "@/components/footer";
@@ -24,7 +23,6 @@ interface Word {
   className: string;
 }
 
-// Move these arrays outside the component
 const zenvizSentence: Word[] = [
   { text: 'Q', className: "text-zinc-100 font-bold" },
   { text: '. ', className: "text-zinc-100 font-bold" },
@@ -112,33 +110,21 @@ export default function Home() {
       <section className="hero bg-[url('/images/moon_img.jpg')] bg-center bg-no-repeat bg-cover ">
         <div className='flex flex-col items-center w-full h-screen bg-blend-overlay '>
           <div
-            // initial={{opacity: 0, y: -50}}
-            // animate={{opacity: 1, y: 0}}
-            // transition={{duration: 1.25}}
             className='w-full'>
             <Navbar/>
           </div>
           <div
-            // initial={{ opacity: 0, y: 100 }}
-            // animate={{ opacity: 1, y: 0 }}
-            // transition={{ duration: 1.5 }}
             className="flex flex-col font-satoshi p-4 sm:p-6 lg:p-8 w-full max-w-4xl mt-16 md:mt-24 justify-center items-center text-center"
           >
             <p className="text-5xl sm:text-7xl lg:text-8xl text-slate-200">
               ZenViz
             </p>
             <p
-              // initial={{opacity: 0, x: -100}}
-              // animate={{opacity: 1, x: 0}}
-              // transition={{duration: 1.25}}
               className="mt-4 text-lg sm:text-xl lg:text-2xl text-zinc-500 font-bold max-w-2xl">
               See code. Feel flow. Master real-world development and deployment.
             </p>
             <div className="flex flex-wrap gap-4 justify-center items-center mt-6">
               <button
-                // initial={{ opacity: 0, x: -200 }}
-                // animate={{ opacity: 1, x: 0 }}
-                // transition={{ duration: 0.95 }}
                 onClick={trymeclick}
                 className="group relative overflow-hidden text-slate-100 font-semibold hover:border-3 hover:border-blue-600 cursor-pointer w-36 sm:w-40 h-12 rounded-xl bg-blue-600 text-sm sm:text-base"
               >
@@ -152,9 +138,6 @@ export default function Home() {
               </button>
 
               <button
-                // initial={{ opacity: 0, x: 200 }}
-                // animate={{ opacity: 1, x: 0 }}
-                // transition={{ duration: 0.95 }}
                 onClick={learnmoreclick}
                 className="group relative overflow-hidden text-zinc-900 font-semibold hover:border-3 hover:border-slate-100 cursor-pointer w-36 sm:w-40 h-12 rounded-xl bg-slate-200 text-sm sm:text-base"
               >
@@ -169,9 +152,6 @@ export default function Home() {
 
             </div>
             <p
-              // initial={{opacity: 0, x: 100}}
-              // animate={{opacity: 1, x: 0}}
-              // transition={{duration: 1.25}}
               className="mt-6 text-base sm:text-lg lg:text-xl text-slate-400 max-w-3xl">
               An immersive Git/Github-powered learning experience that helps you visualize, build, deploy, and grow — the way real developers do it.
             </p>
@@ -186,9 +166,6 @@ export default function Home() {
 
         <div className="relative z-20 flex flex-col justify-center items-center w-full min-h-[60vh] sm:min-h-[75vh] md:min-h-screen font-satoshi p-4 sm:p-6 md:p-8">
           <div
-            // initial={{ opacity: 0, x: -100 }}
-            // animate={{ opacity: 1, x: 0 }}
-            // transition={{ duration: 1 }}
             className="flex flex-col w-full max-w-5xl"
           >
             <div
@@ -240,30 +217,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* <section id="solutions" className="relative overflow-hidden bg-black">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        >
-          <source src="/images/bg_video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-10" />
-
-        <div className="relative z-10 flex flex-col justify-center items-center w-full min-h-[60vh] sm:min-h-[75vh] md:min-h-screen font-satoshi">
-          <div className='flex p-8 items-center rounded-xl'>
-            <p className='text-5xl font-semibold text-slate-200 0'>ZenViz's Solution</p>
-          </div>
-          <div className='flex w-[900px] h-[300px] text-center border-2 border-dashed border-blue-400 rounded-2xl p-4 items-center'>
-              <p className='text-3xl text-blue-300'>
-                ZenViz transforms GitHub repos into interactive learning experiences. With smart visualizations, live vulnerability checks, and code editing, it helps developers truly understand how real-world projects work beyond just reading code.
-              </p>
-          </div>
-        </div>
-      </section> */}
 
       {/* this is solution section okay why the hell do even need the this product */}
       <section

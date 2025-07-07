@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import GlobalLoader from "@/components/globalLoader";
 import "./globals.css";
 
 
@@ -16,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <GlobalLoader/>
         {children}
         <SpeedInsights/>
       </body>

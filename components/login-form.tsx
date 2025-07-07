@@ -5,7 +5,8 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { login  , checkSession} from "@/app/lib/action"
+import { login  , checkSession} from "@/app/lib/auth"
+// import { Github } from "lucide-react"
 
 export function LoginForm() {
   const router = useRouter()
@@ -97,6 +98,7 @@ export function LoginForm() {
           Sign up
         </Link>
       </div>
+      <div className="flex h-[1px] w-[300px] p-2 bg-zinc-100"></div>
     </div>
     </>
   )

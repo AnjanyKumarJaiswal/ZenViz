@@ -1,5 +1,3 @@
-
-
 import {z} from "zod"
 import axios from "axios";
 
@@ -28,7 +26,7 @@ export const newPassword = z.object({
 })
 
 export const httpClient = axios.create({
-    baseURL: "https://zenviz-n6th.onrender.com",
+    baseURL: "http://localhost:5000",
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
@@ -64,6 +62,11 @@ export async function login(formData: FormData) {
         console.log(response.data)
 
         if (response.status=== 200) {
+            await new Promise((resolve)=>{
+                setTimeout(()=>{
+                    resolve("delay")
+                },2000)
+            })
             return { success: true, "message":"Authorized" , data: response.data };
 
         } else {
@@ -142,17 +145,13 @@ export async function checkSession() {
         const response = await httpClient.get("/api/auth/callback/usersession", {
             withCredentials: true
         });
-
-
-        if (!response.status) {
-            return { error: "Unauthorized" };
-        }
-
-        const userData = await response.data;
-        console.log("Session Data:", userData);
-        return userData;
-    } catch (err) {
-        console.error("Session check failed:", err);
-        return { error: "Network error" };
+        
+        return { 
+            success: response.status === 200,
+            data: response.data,
+            status: response.status 
+        };
+    } catch (error) {
+        return { success: false, "error": error };
     }
 }

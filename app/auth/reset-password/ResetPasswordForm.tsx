@@ -1,10 +1,10 @@
 "use client";
 
-import { httpClient } from "@/app/lib/action";
+import { httpClient } from "@/app/lib/auth";
 import { useEffect, FormEvent } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { KeyRound } from "lucide-react";
-import { newPassword } from "@/app/lib/action";
+import { newPassword } from "@/app/lib/auth";
 
 export default function ResetPasswordForm() {
   const searchParams = useSearchParams();

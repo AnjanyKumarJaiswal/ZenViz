@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState , useRef} from "react";
 import { useRouter } from "next/navigation";
-import {httpClient} from "../lib/action"
+import {checkSession} from "../lib/auth"
 import { MainNavbar } from "@/components/navbar";
 import { Music } from "lucide-react";
 
@@ -16,6 +16,7 @@ export interface User {
 export default function DashboardPage() {
 
   const [user, setUser] = useState<User | null >(null);
+  const [loading, setLoading] = useState(true)
   const router = useRouter();
   
   const currentDate = new Date()
@@ -35,19 +36,34 @@ export default function DashboardPage() {
     12 : "December"
   }
 
-  useEffect(() =>{
-    (async() =>{
-      try{
-        const resp = await httpClient.get("//localhost:5000/api/auth/callback/usersession")
-        setUser(resp.data.data)
-        console.log(resp.data)
-      } catch (error){
-        console.log("Not Authenticated")
-        router.push("/auth/login")
-        return ({"message": error})
-      }
-    })()
-  }, [router]);
+  const hasFetched = useRef(false); 
+
+  useEffect(() => {
+      if (hasFetched.current) return;  
+      hasFetched.current = true;
+
+      const authenticateUser = async () => {
+        try {
+          setLoading(true);
+          const resp = await checkSession();
+
+          if (resp.success) {
+            setUser(resp?.data.data);
+          } else {
+            router.push("/auth/login");
+          }
+        } catch (error) {
+          router.push("/auth/login");
+          console.error(error)
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      authenticateUser();
+    }, [router]);
+
+  // if(loading) return <LoadingSpinner/>
 
 
   return (
@@ -55,7 +71,7 @@ export default function DashboardPage() {
       <MainNavbar/>
       <div className="text-4xl font-satoshi text-slate-200 p-8">
         
-        {user != null ? (<p>Welcome Back, {user.username}</p> ) :  ( <p>Loading.....</p> )}
+        {(user != null) ? (<p>Welcome Back, {user.username}</p> ) :  ( loading )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 px-4">
 

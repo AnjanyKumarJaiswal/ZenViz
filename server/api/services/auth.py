@@ -201,6 +201,4 @@ def get_current_user():
         "email" : user.email, 
     }
     
-    print(data)
-    
     return jsonify({"message":"User Authorized" , "data" : data}) , 200
