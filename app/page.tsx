@@ -50,9 +50,9 @@ const zenvizfeatures: Word[] = [
 export default function Home() {
   const router = useRouter();
 
-  const trymeclick = () => {
-    router.push("/auth/login");
-  };
+  // const trymeclick = () => {
+  //   router.push("/auth/login");
+  // };
 
   const learnmoreclick = () => {
     router.push("/#features");
@@ -125,7 +125,6 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center items-center mt-6">
               <button
-                onClick={trymeclick}
                 className="group relative overflow-hidden text-slate-100 font-semibold hover:border-3 hover:border-blue-600 cursor-pointer w-36 sm:w-40 h-12 rounded-xl bg-blue-600 text-sm sm:text-base"
               >
                 <span

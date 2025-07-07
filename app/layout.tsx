@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from '@vercel/speed-insights/next';
-// import HydrationGate from "@/components/globalLoader";
 import GlobalLoader from "@/components/globalLoader";
+import {Analytics} from "@vercel/analytics/next"
 import "./globals.css";
 
 
@@ -39,6 +39,7 @@ export default function RootLayout({
         <GlobalLoader/>
         {children}
         <SpeedInsights/>
+        <Analytics/>
         {/* </HydrationGate> */}
       </body>
     </html>
