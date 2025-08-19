@@ -1,29 +1,5 @@
-import {z} from "zod"
 import axios from "axios";
-
-const SignUpSchema = z.object({
-    fullName: z.string({
-        required_error:"Full Name is Required"
-    }),
-    username : z.string({
-        required_error: "Username is Required"
-    }),
-    email: z.string({
-        required_error:"Email is Required"
-    }).email(
-        {message:"Invalid Email Address"}
-    ).trim(),
-    password: z.string().min(4,{message:"Password must be at least 4 characters"}).trim(),
-    reTypepassword: z.string().min(4,{message:"Re-Entered Password must match the original Password"}).optional()
-})
-
-export const newPassword = z.object({
-    new_password: z.string().min(6,{message:"Password must be at least 6 characters"}),
-    confirm_password: z.string()
-}).refine((data) => data.new_password === data.confirm_password , {
-    message: "Passwords do not match",
-    path: ["confirm_password"]
-})
+import { SignUpSchema } from "../schema/userSchema";
 
 export const httpClient = axios.create({
     baseURL: "http://localhost:5000",
@@ -58,9 +34,6 @@ export async function login(formData: FormData) {
         const response = await httpClient.post("/api/auth/login", {
             email, password
         });
-
-        console.log(response.data)
-
         if (response.status=== 200) {
             await new Promise((resolve)=>{
                 setTimeout(()=>{
@@ -85,9 +58,6 @@ export async function forgetpass(formData: FormData){
         const res = await httpClient.post("/api/auth/forget-password", {
             email
         });
-
-        console.log(res.data)
-
         if(res.status === 200){
             return {success: true, message: "Successfully Done" , data: res.data}
         }
@@ -113,11 +83,7 @@ export async function signup(formData: FormData) {
     }
 
     try{
-
         const response = await httpClient.post("/api/auth/signup",data)
-
-        console.log(response.data)
-
         if(response.status === 200){
             return { success: true, "message":"New Sign Up and Authorized"};
         } else{
@@ -138,11 +104,9 @@ export async function logout() {
       return {"message": error};
     }
   }
-  
-
 export async function checkSession() {
     try {
-        const response = await httpClient.get("/api/auth/callback/usersession", {
+        const response = await httpClient.get("/api/auth/session", {
             withCredentials: true
         });
         

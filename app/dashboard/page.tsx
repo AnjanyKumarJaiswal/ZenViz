@@ -5,17 +5,13 @@ import { useRouter } from "next/navigation";
 import {checkSession} from "../lib/auth"
 import { MainNavbar } from "@/components/navbar";
 import { Music } from "lucide-react";
+import { User } from "../schema/userSchema";
 
-export interface User {
-  id: string,
-  username: string,
-  fullName: string,
-  email:string
-}
 
 export default function DashboardPage() {
 
   const [user, setUser] = useState<User | null >(null);
+  // const [spotifyUser, setSpotifyUser] = useState(null);
   const [loading, setLoading] = useState(true)
   const router = useRouter();
   
@@ -46,8 +42,9 @@ export default function DashboardPage() {
         try {
           setLoading(true);
           const resp = await checkSession();
-
+          console.log("The response from server", resp);
           if (resp.success) {
+            // setUser(resp.data);
             setUser(resp?.data.data);
           } else {
             router.push("/auth/login");

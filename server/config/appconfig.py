@@ -29,6 +29,7 @@ def DB_config(app):
         print("An Error Occured While Initialising Database")
         
 def redis_config(app):
+    global redis_client
     app.config["SECRET_KEY"] = secrets.token_hex(32)
     
     app.config["SESSION_TYPE"] = "redis"
@@ -47,11 +48,12 @@ def redis_config(app):
     
     app.config["SESSION_COOKIE_SECURE"] = False 
     
-    app.config["SESSION_REDIS"] = redis.Redis(
+    redis_client = redis.Redis(
         host="localhost",
         port=6379, 
         decode_responses=False
         )
+    app.config["SESSION_REDIS"] = redis_client
     
     
 def mailServiceConfig(app):

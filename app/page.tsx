@@ -5,6 +5,7 @@ import { useState, useEffect , useCallback } from 'react';
 import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
 import { useRouter } from 'next/navigation';
 import { cn } from "@/lib/utils";
+import { checkSession } from "@/app/lib/auth"
 import { InitialSentenceTyper } from '@/components/InitialSentenceTyper';
 import Footer from "@/components/footer";
 import { InfiniteScrollText } from '@/components/InfiniteScrollText';
@@ -50,9 +51,18 @@ const zenvizfeatures: Word[] = [
 export default function Home() {
   const router = useRouter();
 
-  // const trymeclick = () => {
-  //   router.push("/auth/login");
-  // };
+  async function trymeclick(){
+    try{
+      const res = await checkSession();
+      if(res.status !== 200){
+        router.push("/auth/login");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch(error){
+      return {"error":error};
+    }
+  };
 
   const learnmoreclick = () => {
     router.push("/#features");
@@ -124,17 +134,18 @@ export default function Home() {
               See code. Feel flow. Master real-world development and deployment.
             </p>
             <div className="flex flex-wrap gap-4 justify-center items-center mt-6">
-              <button
+              <div
+              onClick={trymeclick}
                 className="group relative overflow-hidden text-slate-100 font-semibold hover:border-3 hover:border-blue-600 cursor-pointer w-36 sm:w-40 h-12 rounded-xl bg-blue-600 text-sm sm:text-base"
               >
                 <span
                   aria-hidden="true"
                   className="absolute inset-0 bg-white transform scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100 z-0 pointer-events-none"
                 ></span>
-                <span className="relative z-10 transition-colors duration-300 ease-in-out group-hover:text-blue-600">
+                <button className="relative z-10 transition-colors p-[11px] cursor-pointer duration-300 ease-in-out group-hover:text-blue-600">
                   Try ZenViz
-                </span>
-              </button>
+                </button>
+              </div>
 
               <button
                 onClick={learnmoreclick}

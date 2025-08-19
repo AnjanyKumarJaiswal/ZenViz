@@ -25,6 +25,7 @@
     "react-spotify-web-playback": "^0.14.7",
     "tailwind-merge": "^3.0.2",
     "tw-animate-css": "^1.2.4",
+    "zenviz": "link:",
     "zod": "^3.24.2"
   },
   "devDependencies": {

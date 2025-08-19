@@ -31,6 +31,16 @@ class UserItem(db.Model):
     
     def __repr__(self):
         return f"User Email:{self.email}"
+
+class GithubUserItem(db.Model):
+    __tablename__ = 'githubUser'
+    
+    id: Mapped[str] = mapped_column(sa.String(32),primary_key=True,unique=True, default=lambda: uuid4().hex)
+    githubid: Mapped[int] = mapped_column(Integer, unique=False, nullable=True)
+    githubAvater: Mapped[str] = mapped_column(String(255), nullable=False,unique=True)
+    githubUsername: Mapped[str] = mapped_column(String(32), nullable=False,unique=True)
+    githubUserEmail: Mapped[str] = mapped_column(String(32),nullable=False,unique=True)
+    
     
     
 class EmailWaitList(db.Model):
