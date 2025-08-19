@@ -1,9 +1,8 @@
-from api.models.model_schema import UserItem , UserProfileItem
+from api.models.model_schema import UserItem , UserProfileItem, GithubUserItem
 from flask import request , jsonify , session , abort
 from config.appconfig import db  
 from flask_mail import  Message
 from itsdangerous import SignatureExpired , BadTimeSignature
-import logging
 from dotenv import load_dotenv
 import os
 
@@ -47,7 +46,8 @@ def signup():
         db.session.add(new_login)
         db.session.commit()
         
-        session["new_user_id"] = signedUp_user.id
+        session["user_id"] = signedUp_user.id
+        session["auth_provider"] = "local"
         session.modified = True
             
         return jsonify({"message": "User Logged in SuccessFully"}), 200
@@ -81,6 +81,7 @@ def login():
                 return jsonify({"error":"Unauthorized"}) , 401
         
         session["user_id"] = user_login.id    
+        session["auth_provider"] = "local"
         
         session.modified=True
         
@@ -94,7 +95,13 @@ def login():
         return jsonify({"error": str(e)}), 500
     
 def logging_out_from_session():
-    return session.pop("user_id")
+    try:
+        session.pop("user_id", None)
+        session.pop("auth_provider", None)
+        session.modified = True
+        return jsonify({"message": "Logged out"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 def generate_OTP_token(serializer, email: str):
@@ -187,18 +194,44 @@ def new_passowrd(token, new_pass , serializer):
 
 def get_current_user():
     user_id = session.get("user_id")
-    
-    print(user_id)
-    
     if not user_id:
-        return jsonify({"error":"Unauthorized"}), 401
-    
+        return jsonify({"error": "Unauthorized"}), 401
+
+    provider = session.get("auth_provider", "local")
+
+    if provider == "github":
+        gh = GithubUserItem.query.filter_by(githubid=user_id).first()
+        if gh:
+            data = {
+                "id": gh.id,
+                "provider": "github",
+                "username": gh.githubUsername,
+                "email": gh.githubUserEmail,
+                "avatar": gh.githubAvater,
+                "githubId": gh.githubid,
+            }
+            return jsonify({"message": "User Authorized", "data": data}), 200
+
     user = UserItem.query.filter_by(id=user_id).first()
-    
-    data = {
-        "id" : user.id,
-        "username": user.username,
-        "email" : user.email, 
-    }
-    
-    return jsonify({"message":"User Authorized" , "data" : data}) , 200
+    if user:
+        data = {
+            "id": user.id,
+            "provider": "local",
+            "username": user.username,
+            "email": user.email,
+        }
+        return jsonify({"message": "User Authorized", "data": data}), 200
+
+    gh = GithubUserItem.query.filter_by(githubid=user_id).first()
+    if gh:
+        data = {
+            "id": gh.id,
+            "provider": "github",
+            "username": gh.githubUsername,
+            "email": gh.githubUserEmail,
+            "avatar": gh.githubAvater,
+            "githubId": gh.githubid,
+        }
+        return jsonify({"message": "User Authorized", "data": data}), 200
+
+    return jsonify({"error": "Unauthorized"}), 401

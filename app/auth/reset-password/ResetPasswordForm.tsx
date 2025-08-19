@@ -4,7 +4,7 @@ import { httpClient } from "@/app/lib/auth";
 import { useEffect, FormEvent } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { KeyRound } from "lucide-react";
-import { newPassword } from "@/app/lib/auth";
+import { newPassword } from "@/app/schema/userSchema";
 
 export default function ResetPasswordForm() {
   const searchParams = useSearchParams();
@@ -35,10 +35,9 @@ export default function ResetPasswordForm() {
       verifying_token();
     } else {
       // console.log("No token found in URL.");
-      // Handle no token, maybe redirect to forgot password or show an error message
       // router.push('/auth/forgot-password?error=missing_token');
     }
-  }, [token, router]); // Added router to dependencies if used in effect for redirection
+  }, [token, router]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -80,11 +79,9 @@ export default function ResetPasswordForm() {
       } else {
         // const errorData = await res.data;
         // console.error("Password reset failed with status:", res.status, errorData);
-        // TODO: Display error message to user from errorData if available
       }
     } catch (error) {
       // console.error("An error occurred during password reset:", error);
-      // TODO: Display generic error message to user
       return {"message": error}
     }
   }

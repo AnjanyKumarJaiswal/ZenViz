@@ -6,6 +6,7 @@
   import { useRouter } from "next/navigation"
   import Link from "next/link"
   import { signup  } from "@/app/lib/auth"
+  import { Github } from "lucide-react"
 
   export function SignupForm() {
     const router = useRouter()
@@ -35,12 +36,12 @@
     }
 
     return (
-      <div className="mx-auto space-y-4 h-[570px] w-[450px] backdrop-blur-xs bg-slate-950/70 border-2 rounded-xl font-satoshi border-slate-700">
+      <div className="mx-auto space-y-2 h-[570px] w-[450px] backdrop-blur-xs bg-slate-950/70 border-2 rounded-xl font-satoshi border-slate-700">
         <div className="space-y-2 text-center p-4">
           <h1 className="text-3xl text-slate-100 dark:text-slate-300">Sign Up</h1>
           <p className="text-slate-300 dark:text-gray-400 ml-[15px] mr-[15px]">Create an account at ZenViz to get started</p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
+        <form onSubmit={handleSubmit} className="space-y-2 ml-[20px] mr-[20px]">
         {
             status === "Sign Up Failed" ? 
             (<div className="p-3 text-sm text-white bg-red-500 rounded">{status}</div>) : 
@@ -121,6 +122,21 @@
             Log in
           </Link>
         </div>
+
+        <div className="flex flex-row justify-between items-center space-x-4 p-4 max-w-[440px] w-full mx-auto">
+        <div className="flex-1 h-10  flex items-center justify-center bg-black rounded-lg shadow text-white border-2 border-slate-300/50">
+          <button className="flex flex-row gap-2 hover:cursor-pointer">
+            <Github/>
+            Sign in with GitHub
+          </button>
+        </div>
+        <div className="flex-1 h-10 flex items-center justify-center bg-black rounded-lg shadow text-white border-2 border-slate-300/50">
+          <button className="flex flex-row gap-2 hover:cursor-pointer">
+            <div className="bg-[url('/images/google2.png')] bg-no-repeat bg-cover h-[22px] w-[22px]"/>
+            Sign in with Google
+          </button>
+        </div>
+      </div>
       </div>
     )
   }

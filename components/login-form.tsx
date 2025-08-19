@@ -2,34 +2,35 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { login  , checkSession} from "@/app/lib/auth"
-// import { Github } from "lucide-react"
+import { login  , checkSession } from "@/app/lib/auth"
+import { OauthLogin, exisitingGithubUser } from "@/app/lib/authProviders"
+import { Github } from "lucide-react"
 
 export function LoginForm() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [status, setStatus] = useState("")
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState("");
+  const [authLoginWindow, setAuthLoginWindow] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setIsLoading(true)
-    setStatus("")
+    event.preventDefault();
+    setIsLoading(true);
+    setStatus("");
 
     const formData = new FormData(event.currentTarget)
     try{
-      const result = await login(formData)
+      const result = await login(formData);
       if (result && result.success) {
-        
-        const sessionCheck = await checkSession()
+        const sessionCheck = await checkSession();
         
         if (sessionCheck && !sessionCheck.error) {
-          console.log("Session verified, redirecting...")
-          router.push("/dashboard")
+          console.log("Session verified, redirecting...");
+          router.push("/dashboard");
         } else {
-          return ({"message":"Session could not be established"})
+          return ({"message":"Session could not be established"});
         }
       } else {
         setStatus(result?.error || "Login failed")
@@ -40,6 +41,43 @@ export function LoginForm() {
       setIsLoading(false)
     }
   }
+
+  const oauth_services = ['github','google']
+  type OAuthService = typeof oauth_services[number]
+
+  async function handleOauth(oauth_type: OAuthService){
+    try{
+      const response = await exisitingGithubUser();
+      if(!response?.success){
+        const res = await OauthLogin(oauth_type);
+        const auth_url = res?.message.url 
+        window.open(auth_url, "_blank", "width=500,height=600");
+        useEffect(() => {
+          const handler = (event: MessageEvent) => {
+            if (event.data?.type === 'OAUTH_SUCCESS') {
+              console.log("Logged in as", event.data.username);
+              setAuthLoginWindow(true);
+            }
+          };
+          window.addEventListener('message', handler);
+          return () => window.removeEventListener('message', handler);
+        }, []);
+      } 
+      else{
+        const session = await checkSession();
+
+        if(session?.status === 200){
+          console.log("Session verified, redirecting...");
+          router.push("/dashboard");
+        } else {
+          return ({"message":"Session could not be established"});
+        }
+      }
+    } catch(error){
+        return {"error": error}
+    }
+  }
+
   return (
     <>
     <div className="mx-auto space-y-4 h-[520px] w-[450px] backdrop-blur-xs bg-slate-950/70 border-2 border-slate-700 rounded-md font-satoshi">
@@ -47,6 +85,7 @@ export function LoginForm() {
         <h1 className="text-3xl text-slate-100 dark:text-slate-900">Welcome Back to ZenViz</h1>
         <p className="text-slate-300 dark:text-gray-700 ml-[15px] mr-[15px]">Hey there, Zenviz is your specialized personal space as Developers</p>
       </div>
+
       <form  onSubmit={handleSubmit} className="space-y-4 ml-[20px] mr-[20px]">
         {
           status === "Login Failed" ? 
@@ -92,13 +131,36 @@ export function LoginForm() {
           {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
+
       <div className="text-center text-sm text-slate-100 dark:text-gray-400">
         Don&apos;t have an account?{" "}
         <Link href="/auth/signup" className="text-blue-500 font-bold   dark:text-blue-400 hover:underline">
           Sign up
         </Link>
       </div>
-      <div className="flex h-[1px] w-[300px] p-2 bg-zinc-100"></div>
+
+      <div className="flex flex-row justify-between items-center space-x-4 p-4 max-w-[440px] w-full mx-auto">
+        <div className="flex-1 h-10  flex items-center justify-center bg-black rounded-lg shadow text-white border-2 border-slate-300/50">
+          <button 
+          className="flex flex-row gap-2 hover:cursor-pointer"
+          onClick={() => { handleOauth('github')}}
+          >
+            <Github/>
+            Sign in with GitHub
+          </button>
+        </div>
+        <div className="flex-1 h-10 flex items-center justify-center bg-black rounded-lg shadow text-white border-2 border-slate-300/50">
+          <button 
+          className="flex flex-row gap-2 hover:cursor-pointer"
+          onClick={()=>{handleOauth('google')}}
+          >
+            <div className="bg-[url('/images/google2.png')] bg-no-repeat bg-cover h-[22px] w-[22px]"/>
+            Sign in with Google
+          </button>
+        </div>
+      </div>
+
+
     </div>
     </>
   )
