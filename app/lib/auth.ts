@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SignUpSchema , Session } from "../schema/userSchema";
+import { SignUpSchema } from "../schema/userSchema";
 
 export const httpClient = axios.create({
     baseURL: "http://localhost:5000",

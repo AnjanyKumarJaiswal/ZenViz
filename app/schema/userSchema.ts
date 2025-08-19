@@ -23,9 +23,9 @@ export const newPassword = z.object({
     message: "Passwords do not match",
     path: ["confirm_password"]
 })
-
-export type Session = {
-    userId: string,
-    username: string,
-    token?: string
+export interface User {
+  id: string,
+  username: string,
+  fullName: string,
+  email:string
 }

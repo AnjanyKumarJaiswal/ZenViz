@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import {checkSession} from "../lib/auth"
 import { MainNavbar } from "@/components/navbar";
 import { Music } from "lucide-react";
-import { User } from "../lib/schema";
+import { User } from "../schema/userSchema";
 
 
 export default function DashboardPage() {
 
   const [user, setUser] = useState<User | null >(null);
-  const [spotifyUser, setSpotifyUser] = useState(null);
+  // const [spotifyUser, setSpotifyUser] = useState(null);
   const [loading, setLoading] = useState(true)
   const router = useRouter();
   
