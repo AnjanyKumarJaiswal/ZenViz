@@ -8,13 +8,15 @@ from api.services.oauth import githubOauth , github_callback , githubUser
 from flask_bcrypt import Bcrypt
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail 
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 
 CORS(
     app,
     supports_credentials=True,
-    origins=["http://localhost:3000"],
+    origins=[os.getenv("FRONTEND_URL")],
     allow_headers=["Content-Type", "Authorization"]
     )
 
