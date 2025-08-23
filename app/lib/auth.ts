@@ -2,7 +2,7 @@ import axios from "axios";
 import { SignUpSchema } from "../schema/userSchema";
 
 export const httpClient = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: process.env.BACKEND_URL,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
